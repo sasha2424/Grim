@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Graphics;
+
 import main.SpriteSheetLoader;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -17,7 +19,7 @@ public abstract class Entity {
 		texture = SpriteSheetLoader.getTexture(x, y);
 	}
 
-	public abstract void draw(PApplet p, Tile t, Player player, double rotation, double height);
+	public abstract void draw(Graphics g, Tile t, Player player, double rotation, double height);
 
 	public double getAbsX() {
 		return absX;

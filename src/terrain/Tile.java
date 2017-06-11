@@ -1,5 +1,7 @@
 package terrain;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import entities.Entity;
@@ -44,41 +46,40 @@ public class Tile implements Comparable {
 		entities.add(e);
 	}
 
-	public void draw(PApplet p, TileHandler t, double rotation, Player player, double heightShift) {
+	public void draw(Graphics g, TileHandler t, double rotation, Player player, double heightShift) {
 		double[] h = t.getAdjacentTileHeights(boardX, boardY);
 		// top left bottom right
 
 		double k = heightShift;
 
-		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), p.width / 2,
-				p.height / 2);
+		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), Main.WIDTH / 2,
+				Main.HEIGHT / 2);
 
-		p.strokeWeight(2);
-		p.fill(100, 100, 100);
+		g.setColor(new Color(100, 100, 100));
 
 		if (Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2) {
-			rect(p, C[0][0], C[1][0] - H + k, C[0][3], C[1][3] - H + k, C[0][3], C[1][3] - h[0] + k, C[0][0],
+			rect(g, C[0][0], C[1][0] - H + k, C[0][3], C[1][3] - H + k, C[0][3], C[1][3] - h[0] + k, C[0][0],
 					C[1][0] - h[0] + k);
 		}
 		if (Math.PI < rotation && rotation < 2 * Math.PI) {
-			rect(p, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][1], C[1][1] - h[1] + k, C[0][0],
+			rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][1], C[1][1] - h[1] + k, C[0][0],
 					C[1][0] - h[1] + k);
 		}
 		if (!(Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2)) {
-			rect(p, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[2] + k, C[0][1],
+			rect(g, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[2] + k, C[0][1],
 					C[1][1] - h[2] + k);
 		}
 		if (0 < rotation && rotation < Math.PI) {
-			rect(p, C[0][3], C[1][3] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[3] + k, C[0][3],
+			rect(g, C[0][3], C[1][3] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[3] + k, C[0][3],
 					C[1][3] - h[3] + k);
 		}
 
-		p.fill(100, 100, 255);
+		g.setColor(new Color(100, 100, 255));
 
-		rect(p, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
+		rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
 
 		for (Entity e : entities) {
-			e.draw(p, this, player, rotation, -H + TileHandler.getPlayerHeight(player));
+			e.draw(g, this, player, rotation, -H + TileHandler.getPlayerHeight(player));
 		}
 	}
 
@@ -98,15 +99,12 @@ public class Tile implements Comparable {
 		p.line(X1, Y1, X2, Y2);
 	}
 
-	private void rect(PApplet p, double X1, double Y1, double X2, double Y2, double X3, double Y3, double X4,
+	private void rect(Graphics g, double X1, double Y1, double X2, double Y2, double X3, double Y3, double X4,
 			double Y4) {
-		p.beginShape();
-		p.vertex((float) X1, (float) Y1);
-		p.vertex((float) X2, (float) Y2);
-		p.vertex((float) X3, (float) Y3);
-		p.vertex((float) X4, (float) Y4);
-		p.vertex((float) X1, (float) Y1);
-		p.endShape();
+
+		g.fillPolygon(new int[] { (int) X1, (int) X2, (int) X3, (int) X4 },
+				new int[] { (int) Y1, (int) Y2, (int) Y3, (int) Y4 }, 4);
+
 	}
 
 	private double[][] getCoords(double r, double s, double x, double y, double Width, double Height) {

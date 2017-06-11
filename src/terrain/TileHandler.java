@@ -1,24 +1,26 @@
 package terrain;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import entities.Player;
 import entities.Tree;
+import main.GameWindow;
 import processing.core.PApplet;
 
 public class TileHandler {
 
-	private PApplet p;
-
+	private static GameWindow game;
+	
 	public static final int GRID_SIZE = 10;
 
 	private static ArrayList<Tile> tiles;
 
 	private Tile playerTile;
 
-	public TileHandler(PApplet p) {
-		this.p = p;
+	public TileHandler(GameWindow g) {
+		game = g;
 		tiles = new ArrayList<Tile>();
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -35,7 +37,7 @@ public class TileHandler {
 	public void renderTiles(double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
-			tiles.get(i).draw(p, this, rotation, player,
+			tiles.get(i).draw(game.getGraphics(), this, rotation, player,
 					getTileHeight(absToBoard(player.getX()), absToBoard(player.getY())));
 		}
 	}

@@ -2,6 +2,9 @@ package main;
 
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +14,8 @@ public class GameWindow {
 
 	private JFrame frame;
 	private JPanel panel;
+
+	public Point mouse;
 
 	/**
 	 * Create the application.
@@ -28,6 +33,12 @@ public class GameWindow {
 		getFrame().setBounds(100, 100, 600, 600);
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		frame.addMouseListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				mouse = e.getPoint();
+			}
+		});
+
 		panel = new JPanel();
 		getFrame().getContentPane().add(panel, BorderLayout.CENTER);
 	}
@@ -43,6 +54,5 @@ public class GameWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
-	
 
 }
