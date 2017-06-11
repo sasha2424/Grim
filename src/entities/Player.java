@@ -1,5 +1,8 @@
 package entities;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import main.Main;
 import processing.core.PApplet;
 import terrain.Tile;
@@ -37,9 +40,9 @@ public class Player extends Entity {
 		this.absY = boardY * Tile.TILE_SIZE;
 	}
 
-	public void draw(PApplet p, Tile t, Player player, double rotation, double height) {
-		p.fill(255, 0, 0);
-		p.ellipse((float) (p.width / 2), (float) (p.height / 2), 30f, 30f);
+	public void draw(Graphics g, Tile t, Player player, double rotation, double height) {
+		g.setColor(Color.red);
+		g.fillOval((int) (Main.WIDTH / 2), (int) (Main.HEIGHT / 2), 30, 30);
 	}
 
 	public void move(double rotation) {

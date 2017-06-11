@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import main.SpriteSheetLoader;
 import processing.core.PApplet;
@@ -10,7 +11,7 @@ import terrain.Tile;
 public abstract class Entity {
 
 	protected double absX, absY;
-	protected PImage texture;
+	protected Image texture;
 	protected double HP;
 
 	public Entity(double X, double Y, int x, int y) {

@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Graphics;
+
 import processing.core.PApplet;
 import terrain.Tile;
 
@@ -9,6 +11,6 @@ public abstract class StationaryEntity extends Entity {
 		super(X, Y, x, y);
 	}
 
-	public abstract void draw(PApplet p, Tile t, Player player, double rotation, double height);
+	public abstract void draw(Graphics g, Tile t, Player player, double rotation, double height);
 
 }
