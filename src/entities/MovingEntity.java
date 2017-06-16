@@ -5,16 +5,17 @@ import java.awt.Graphics;
 import processing.core.PApplet;
 import terrain.Tile;
 
-public abstract class StationaryEntity extends Entity {
-	
-	public boolean spawnsMonster;
+public abstract class MovingEntity extends Entity {
 
-	public StationaryEntity(double X, double Y, int x, int y) {
+	public MovingEntity(double X, double Y, int x, int y) {
 		super(X, Y, x, y);
-		canMove = false;
+		canMove = true;
 	}
 
 	public abstract void draw(Graphics g, Tile t, Player player, double rotation, double height);
-	
 
+	protected void move() {
+		absX += velX;
+		absY += velY;
+	}
 }

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 import entities.Entity;
 import entities.Player;
-import main.Main;
+import main.GameWindow;
+import main.KeyHandler;
 import processing.core.PApplet;
 
 public class Tile implements Comparable {
@@ -30,6 +31,16 @@ public class Tile implements Comparable {
 		absY = boardY * TILE_SIZE;
 	}
 
+	public ArrayList<Entity> getMisplacedEntities(TileHandler t) {
+		ArrayList<Entity> r = new ArrayList<Entity>();
+		for (Entity e : entities) {
+			if (t.getTile(e.getAbsX(), e.getAbsY()) != this) {
+				r.add(e);
+			}
+		}
+		return r;
+	}
+
 	public boolean inBorder(double x, double y) {
 		return absX < x && x < absX + TILE_SIZE && absY < y && y < absY + TILE_SIZE;
 	}
@@ -46,14 +57,22 @@ public class Tile implements Comparable {
 		entities.add(e);
 	}
 
+	public void clearEntities() {
+		entities.removeAll(entities);
+	}
+
+	public void clearEntities(ArrayList<Entity> r) {
+		entities.removeAll(r);
+	}
+
 	public void draw(Graphics g, TileHandler t, double rotation, Player player, double heightShift) {
 		double[] h = t.getAdjacentTileHeights(boardX, boardY);
 		// top left bottom right
 
 		double k = heightShift;
 
-		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), Main.WIDTH / 2,
-				Main.HEIGHT / 2);
+		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), GameWindow.WIDTH / 2,
+				GameWindow.HEIGHT / 2);
 
 		g.setColor(new Color(100, 100, 100));
 
@@ -61,14 +80,17 @@ public class Tile implements Comparable {
 			rect(g, C[0][0], C[1][0] - H + k, C[0][3], C[1][3] - H + k, C[0][3], C[1][3] - h[0] + k, C[0][0],
 					C[1][0] - h[0] + k);
 		}
+		g.setColor(new Color(100, 100, 100));
 		if (Math.PI < rotation && rotation < 2 * Math.PI) {
 			rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][1], C[1][1] - h[1] + k, C[0][0],
 					C[1][0] - h[1] + k);
 		}
+		g.setColor(new Color(100, 100, 100));
 		if (!(Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2)) {
 			rect(g, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[2] + k, C[0][1],
 					C[1][1] - h[2] + k);
 		}
+		g.setColor(new Color(100, 100, 100));
 		if (0 < rotation && rotation < Math.PI) {
 			rect(g, C[0][3], C[1][3] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[3] + k, C[0][3],
 					C[1][3] - h[3] + k);
@@ -104,6 +126,9 @@ public class Tile implements Comparable {
 
 		g.fillPolygon(new int[] { (int) X1, (int) X2, (int) X3, (int) X4 },
 				new int[] { (int) Y1, (int) Y2, (int) Y3, (int) Y4 }, 4);
+		g.setColor(Color.black);
+		g.drawPolygon(new int[] { (int) X1, (int) X2, (int) X3, (int) X4 },
+				new int[] { (int) Y1, (int) Y2, (int) Y3, (int) Y4 }, 4);
 
 	}
 
@@ -133,7 +158,8 @@ public class Tile implements Comparable {
 	@Override
 	public int compareTo(Object a) {
 		Tile k = (Tile) a;
-		return (int) (getY(this.absX, this.absY, Main.rotation, 0) - getY(k.absX, k.absY, Main.rotation, 0));
+		return (int) (getY(this.absX, this.absY, GameWindow.rotation, 0)
+				- getY(k.absX, k.absY, GameWindow.rotation, 0));
 	}
 
 	public int getBoardX() {
