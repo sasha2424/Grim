@@ -77,29 +77,28 @@ public class Tile implements Comparable {
 		g.setColor(new Color(100, 100, 100));
 
 		if (Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2) {
-			rect(g, t, C[0][0], C[1][0] - H + k, C[0][3], C[1][3] - H + k, C[0][3], C[1][3] - h[0] + k, C[0][0],
+			rect(g, C[0][0], C[1][0] - H + k, C[0][3], C[1][3] - H + k, C[0][3], C[1][3] - h[0] + k, C[0][0],
 					C[1][0] - h[0] + k);
 		}
 		g.setColor(new Color(100, 100, 100));
 		if (Math.PI < rotation && rotation < 2 * Math.PI) {
-			rect(g, t, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][1], C[1][1] - h[1] + k, C[0][0],
+			rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][1], C[1][1] - h[1] + k, C[0][0],
 					C[1][0] - h[1] + k);
 		}
 		g.setColor(new Color(100, 100, 100));
 		if (!(Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2)) {
-			rect(g, t, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[2] + k, C[0][1],
+			rect(g, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[2] + k, C[0][1],
 					C[1][1] - h[2] + k);
 		}
 		g.setColor(new Color(100, 100, 100));
 		if (0 < rotation && rotation < Math.PI) {
-			rect(g, t, C[0][3], C[1][3] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[3] + k, C[0][3],
+			rect(g, C[0][3], C[1][3] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[3] + k, C[0][3],
 					C[1][3] - h[3] + k);
 		}
 
 		g.setColor(new Color(100, 100, 255));
 
-		rect(g, t, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3],
-				C[1][3] - H + k);
+		rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
 
 		for (Entity e : entities) {
 			e.draw(g, this, player, rotation, -H + TileHandler.getPlayerHeight(player));
@@ -122,20 +121,16 @@ public class Tile implements Comparable {
 		p.line(X1, Y1, X2, Y2);
 	}
 
-	private void rect(Graphics g, TileHandler t, double X1, double Y1, double X2, double Y2, double X3, double Y3,
-			double X4, double Y4) {
+	private void rect(Graphics g, double X1, double Y1, double X2, double Y2, double X3, double Y3, double X4,
+			double Y4) {
 
-		g.fillPolygon(new int[] { (int) X1, (int) X2, (int) X3 }, new int[] { (int) (Y1 + t.getTerrainHeight(X1, Y1)),
-				(int) (Y2 + t.getTerrainHeight(X2, Y2)), (int) (Y3 + t.getTerrainHeight(X3, Y3)) }, 3);
-		g.fillPolygon(new int[] { (int) X1, (int) X2, (int) X3 }, new int[] { (int) (Y1 + t.getTerrainHeight(X1, Y1)),
-				(int) (Y4 + t.getTerrainHeight(X4, Y4)), (int) (Y3 + t.getTerrainHeight(X3, Y3)) }, 3);
+		g.fillPolygon(new int[] { (int) X1, (int) X2, (int) X3, (int) X4 },
+				new int[] { (int) Y1, (int) Y2, (int) Y3, (int) Y4 }, 4);
 
 		g.setColor(Color.black);
 
-		g.drawPolygon(new int[] { (int) X1, (int) X2, (int) X3 }, new int[] { (int) (Y1 + t.getTerrainHeight(X1, Y1)),
-				(int) (Y2 + t.getTerrainHeight(X2, Y2)), (int) (Y3 + t.getTerrainHeight(X3, Y3)) }, 3);
-		g.drawPolygon(new int[] { (int) X1, (int) X2, (int) X3 }, new int[] { (int) (Y1 + t.getTerrainHeight(X1, Y1)),
-				(int) (Y4 + t.getTerrainHeight(X4, Y4)), (int) (Y3 + t.getTerrainHeight(X3, Y3)) }, 3);
+		g.drawPolygon(new int[] { (int) X1, (int) X2, (int) X3, (int) X4 },
+				new int[] { (int) Y1, (int) Y2, (int) Y3, (int) Y4 }, 4);
 
 	}
 

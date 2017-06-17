@@ -33,16 +33,6 @@ public class TileHandler {
 
 	}
 
-	public double getTerrainValue(double x, double y) { // FIXME add terrain
-														// function
-		return 10;
-	}
-
-	public double getTerrainHeight(double x, double y) { // TODO gets height for
-															// entity rendering
-		return 10;
-	}
-
 	public void updateEntityLocations() {
 		for (int t = 0; t < tiles.size(); t++) {
 			ArrayList<Entity> remove = new ArrayList<Entity>();
@@ -52,19 +42,6 @@ public class TileHandler {
 			}
 			tiles.get(t).clearEntities(remove);
 		}
-	}
-
-	
-	public void drawSquare(Graphics g, double rotation, Player player) {
-
-	}
-
-	private static double getX(double x, double y, double r, double Width) {
-		return (x) * Math.cos(r) - (y) * Math.sin(r) + Width;
-	}
-
-	private static double getY(double x, double y, double r, double Height) {
-		return (y) * Math.cos(r) + (x) * Math.sin(r) + Height;
 	}
 
 	@SuppressWarnings("unchecked")
