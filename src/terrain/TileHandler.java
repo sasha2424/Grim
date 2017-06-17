@@ -1,5 +1,6 @@
 package terrain;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import processing.core.PApplet;
 
 public class TileHandler {
 
-	public static final int GRID_SIZE = 10;
+	public static final int GRID_SIZE = 50;
 
 	private static ArrayList<Tile> tiles;
 
@@ -53,15 +54,17 @@ public class TileHandler {
 		}
 	}
 
-	public void renderTerrain(Graphics g, double rotation, Player player) {
-		double[][] heights = new double[10][10];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				heights[i][j] = this.getTerrainValue(i * GRID_SIZE - 5 * GRID_SIZE, j * GRID_SIZE - 5 * GRID_SIZE);
-			}
-		}
-		
-		
+	
+	public void drawSquare(Graphics g, double rotation, Player player) {
+
+	}
+
+	private static double getX(double x, double y, double r, double Width) {
+		return (x) * Math.cos(r) - (y) * Math.sin(r) + Width;
+	}
+
+	private static double getY(double x, double y, double r, double Height) {
+		return (y) * Math.cos(r) + (x) * Math.sin(r) + Height;
 	}
 
 	@SuppressWarnings("unchecked")

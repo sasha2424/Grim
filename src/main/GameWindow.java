@@ -74,6 +74,8 @@ public class GameWindow extends JPanel {
 
 		tileHandler.movePlayer(player);
 
+		g.setColor(Color.red);
+		
 		if (Tab == 0) {
 
 			tileHandler.renderTiles(g, rotation, player);
