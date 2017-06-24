@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import entities.Bush;
 import entities.Entity;
+import entities.EntityHandler;
 import entities.Grass;
 import entities.Player;
 import entities.Tree;
@@ -33,23 +34,13 @@ public class TileHandler {
 
 	}
 
-	public void updateEntityLocations() {
-		for (int t = 0; t < tiles.size(); t++) {
-			ArrayList<Entity> remove = new ArrayList<Entity>();
-			remove = tiles.get(t).getMisplacedEntities(this);
-			for (int i = 0; i < remove.size(); i++) {
-				addEntity(remove.get(i));
-			}
-			tiles.get(t).clearEntities(remove);
-		}
-	}
-
 	@SuppressWarnings("unchecked")
-	public void renderTiles(Graphics g, double rotation, Player player) {
+	public void renderAll(Graphics g, EntityHandler e, double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
 			tiles.get(i).draw(g, this, rotation, player,
 					getTileHeight(absToBoard(player.getX()), absToBoard(player.getY())));
+			e.renderEntitiesAt(g, tiles.get(i), player, rotation, tiles.get(i).getH());
 		}
 	}
 
@@ -70,15 +61,6 @@ public class TileHandler {
 			}
 		}
 		return r;
-	}
-
-	public void movePlayer(Player p) {
-
-		if (!playerTile.inBorder(p.getX(), p.getY()) && getTile(p.getX(), p.getY()) != null) {
-			playerTile.removePlayer(p);
-			playerTile = getTile(p.getX(), p.getY());
-			playerTile.addPlayer(p);
-		}
 	}
 
 	public static double getPlayerHeight(Player p) {
@@ -114,10 +96,6 @@ public class TileHandler {
 
 	public static int absToBoard(double a) {
 		return (int) (a / Tile.TILE_SIZE);
-	}
-
-	public void addEntity(Entity e) {
-		getTile(e.getAbsX(), e.getAbsY()).addEntity(e);
 	}
 
 }

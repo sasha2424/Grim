@@ -27,6 +27,9 @@ public class KeyHandler implements KeyListener {
 		if (k.getKeyCode() == KeyEvent.VK_W) {
 			keys[0] = true;
 		}
+		if (k.getKeyCode() == KeyEvent.VK_E) {
+			keys[4] = !keys[4];
+		}
 	}
 
 	@Override
@@ -37,7 +40,7 @@ public class KeyHandler implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent k) {
 
 	}
 

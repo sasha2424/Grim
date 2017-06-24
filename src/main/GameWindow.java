@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import entities.EntityHandler;
 import entities.Player;
 import entities.Walker;
+import items.Bread;
 import terrain.TileHandler;
 
 public class GameWindow extends JPanel {
@@ -51,7 +52,8 @@ public class GameWindow extends JPanel {
 
 		entityHandler.addEntity(new Walker(100, 100));
 		entityHandler.addEntity(player);
-		entityHandler.sendOutEntities(tileHandler);
+		
+		player.inventory.addItem(new Bread());
 
 		long t = System.currentTimeMillis();
 		long dt = 0;
@@ -72,13 +74,11 @@ public class GameWindow extends JPanel {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, (int) GameWindow.WIDTH, (int) GameWindow.HEIGHT);
 
-		tileHandler.movePlayer(player);
-
 		g.setColor(Color.red);
-		
-		if (Tab == 0) {
 
-			tileHandler.renderTiles(g, rotation, player);
+		if (Tab == 0) { // in game
+
+			tileHandler.renderAll(g, entityHandler, rotation, player);
 			g.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
 
 			mouse = MouseInfo.getPointerInfo().getLocation();
@@ -93,6 +93,13 @@ public class GameWindow extends JPanel {
 			if (keyHandler.getKeyPressed(0)) {
 				player.move(rotation);
 			}
+			player.inventory.renderHandBar(g);
+		}
+		if (keyHandler.getKeyPressed(4)) { // inventory
+			Tab = 1;
+			player.inventory.render(g);
+		} else {
+			Tab = 0;
 		}
 	}
 

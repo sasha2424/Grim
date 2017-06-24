@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import main.GameWindow;
 import main.KeyHandler;
+import player.Inventory;
 import processing.core.PApplet;
 import terrain.Tile;
 import terrain.TileHandler;
@@ -12,9 +13,11 @@ import terrain.TileHandler;
 public class Player extends Entity {
 
 	public static final double speed = 2;
+	public Inventory inventory;
 
 	public Player(int X, int Y, int x, int y) {
 		super(X, Y, x, y);
+		inventory = new Inventory();
 	}
 
 	public double getX() {

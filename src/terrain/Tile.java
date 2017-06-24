@@ -16,14 +16,12 @@ public class Tile implements Comparable {
 
 	// public static final double TILE_SIZE = 100;
 
-	private ArrayList<Entity> entities;
 
 	private int boardX, boardY; // grid location
 
 	private double absX, absY, H;
 
 	public Tile(int x, int y, double h) {
-		entities = new ArrayList<Entity>();
 		this.boardX = x;
 		this.boardY = y;
 		this.H = h;
@@ -31,38 +29,8 @@ public class Tile implements Comparable {
 		absY = boardY * TILE_SIZE;
 	}
 
-	public ArrayList<Entity> getMisplacedEntities(TileHandler t) {
-		ArrayList<Entity> r = new ArrayList<Entity>();
-		for (Entity e : entities) {
-			if (t.getTile(e.getAbsX(), e.getAbsY()) != this) {
-				r.add(e);
-			}
-		}
-		return r;
-	}
-
 	public boolean inBorder(double x, double y) {
 		return absX < x && x < absX + TILE_SIZE && absY < y && y < absY + TILE_SIZE;
-	}
-
-	public void removePlayer(Player p) {
-		entities.remove(p);
-	}
-
-	public void addPlayer(Player p) {
-		entities.add(p);
-	}
-
-	public void addEntity(Entity e) {
-		entities.add(e);
-	}
-
-	public void clearEntities() {
-		entities.removeAll(entities);
-	}
-
-	public void clearEntities(ArrayList<Entity> r) {
-		entities.removeAll(r);
 	}
 
 	public void draw(Graphics g, TileHandler t, double rotation, Player player, double heightShift) {
@@ -99,10 +67,6 @@ public class Tile implements Comparable {
 		g.setColor(new Color(100, 100, 255));
 
 		rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
-
-		for (Entity e : entities) {
-			e.draw(g, this, player, rotation, -H + TileHandler.getPlayerHeight(player));
-		}
 	}
 
 	private static double getX(double x, double y, double r, double Width) {

@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import terrain.Tile;
@@ -17,7 +18,6 @@ public class EntityHandler {
 		for (Entity e : entities) {
 			e.tick(this);
 		}
-		t.updateEntityLocations();
 	}
 
 	public void addEntity(Entity e) {
@@ -30,9 +30,11 @@ public class EntityHandler {
 		}
 	}
 
-	public void sendOutEntities(TileHandler t) {
+	public void renderEntitiesAt(Graphics g, Tile t, Player player, double rotation, double height) {
 		for (Entity e : entities) {
-			t.addEntity(e);
+			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
+				e.draw(g, t, player, rotation, height);
+			}
 		}
 	}
 
