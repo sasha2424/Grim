@@ -11,9 +11,7 @@ public abstract class Biome implements Serializable {
 
 	private Color surface;
 	private Color ground;
-	
-	private double radius; //size of biome
-	private double x,y; //center
+
 
 	private int tickCounter;
 

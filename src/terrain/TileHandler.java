@@ -30,12 +30,9 @@ public class TileHandler {
 	// area where all tiles are loaded
 	public static final int LOAD_SIZE = 2;
 
-	private double seed = 0;
+	private static long seed = 0;
 
 	private static ArrayList<Tile> tiles;
-
-	private static final String SAVE_PATH = "C:\\Users\\sasha\\Desktop\\JAVA\\RPG\\Adventure\\tiles";
-	// TODO move to main class
 
 	public TileHandler(double seed, EntityHandler e) {
 		tiles = new ArrayList<Tile>();
@@ -68,10 +65,14 @@ public class TileHandler {
 				}
 			}
 		}
+
 	}
 
 	public static double terrainHeight(int x, int y) {
-		return 50 * Math.cos(x * 10) + 50 * Math.sin(y * 10) + 50;
+		Random rand = new Random(seed);
+		int k = 100;// max tile height
+
+		return rand.nextInt(k + 1) * Math.cos(x * 10) + rand.nextInt(k + 1) * Math.sin(y * 10) + rand.nextInt(k + 1);
 	}
 
 	public static Biome getBiome(int x, int y) {

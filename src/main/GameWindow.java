@@ -71,7 +71,6 @@ public class GameWindow extends JPanel {
 			frame.repaint();
 			if (dt > 20) {
 				entityHandler.tick(tileHandler);
-				tileHandler.updateTiles(entityHandler, player);
 				t = System.currentTimeMillis();
 			}
 
@@ -88,6 +87,8 @@ public class GameWindow extends JPanel {
 
 		if (Tab == 0) { // in game
 
+			// only update, do spawn, and render when in game
+			tileHandler.updateTiles(entityHandler, player);
 			tileHandler.renderAll(g, entityHandler, rotation, player);
 			g.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
 
