@@ -24,7 +24,6 @@ public class Bush extends StationaryEntity {
 
 	@Override
 	public void tick(EntityHandler e) {
-		// TODO Auto-generated method stub
 		
 	}
 

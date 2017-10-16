@@ -1,12 +1,13 @@
 package player;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import items.Item;
 import main.GameWindow;
 
-public class Inventory {
+public class Inventory implements Serializable{
 	private static final int SPACING = 60;
 
 	private static final int DOWN_SHIFT = 210;

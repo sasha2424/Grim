@@ -2,10 +2,11 @@ package items;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 
 import main.SpriteSheetLoader;
 
-public class Item {
+public class Item implements Serializable{
 
 	protected Image texture;
 

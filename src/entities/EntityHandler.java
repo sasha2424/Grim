@@ -8,7 +8,7 @@ import terrain.TileHandler;
 
 public class EntityHandler {
 
-	ArrayList<Entity> entities;
+	private ArrayList<Entity> entities;
 
 	public EntityHandler() {
 		entities = new ArrayList<Entity>();
@@ -25,17 +25,44 @@ public class EntityHandler {
 	}
 
 	public void addEntities(ArrayList<Entity> e) {
-		for (Entity a : e) {
-			entities.add(a);
+		if (e != null) {
+			for (Entity a : e) {
+				entities.add(a);
+			}
 		}
 	}
 
-	public void renderEntitiesAt(Graphics g, Tile t, Player player, double rotation, double height) {
-		for (Entity e : entities) {
-			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
-				e.draw(g, t, player, rotation, height);
+	// same as addEntities() but also updates the texture of each one
+	// only for when tiles are being reloaded
+	public void addEntitiesFromSave(ArrayList<Entity> e) {
+		if (e != null) {
+			for (Entity a : e) {
+				a.updateTexture();
+				entities.add(a);
 			}
 		}
+	}
+
+	public void renderEntitiesAt(Graphics g, Tile t, double playerH, Player player, double rotation) {
+		for (int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
+				e.draw(g, t, player, rotation, playerH - t.getH());
+			}
+		}
+	}
+
+	public ArrayList<Entity> getEntitiesInTile(Tile t) {
+		ArrayList<Entity> e = new ArrayList<Entity>();
+		for (int i = 0; i < entities.size(); i++) {
+			if (!(entities.get(i) instanceof Player)) {
+				if (t.inBorder(entities.get(i).getAbsX(), entities.get(i).getAbsY())) {
+					e.add(entities.get(i));
+					entities.remove(i);
+				}
+			}
+		}
+		return e;
 	}
 
 	public Entity randomEntity() { // FIXME get list of all Entities and use
@@ -59,6 +86,10 @@ public class EntityHandler {
 		double dx = (e1.getAbsX() - e2.getAbsX()) * (e1.getAbsX() - e2.getAbsX());
 		double dy = (e1.getAbsY() - e2.getAbsY()) * (e1.getAbsY() - e2.getAbsY());
 		return Math.sqrt(dx + dy);
+	}
+
+	public int getEntityCount() {
+		return entities.size();
 	}
 
 }

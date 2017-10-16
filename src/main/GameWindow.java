@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import entities.EntityHandler;
@@ -38,7 +40,20 @@ public class GameWindow extends JPanel {
 	public static int Tab = 0;
 
 	public static void main(String[] args) {
+
 		SpriteSheetLoader.load();
+
+		player = new Player(0, 0, 0, 1);
+		entityHandler = new EntityHandler();
+
+		entityHandler.addEntity(new Walker(100, 100));
+		entityHandler.addEntity(player);
+
+		player.inventory.addItem(new Bread());
+		player.inventory.addItem(new Bread());
+		player.inventory.addItem(new Bread());
+
+		tileHandler = new TileHandler(Math.random() * 100, entityHandler);
 
 		JFrame frame = new JFrame("Grim");
 		frame.getContentPane().add(new GameWindow(), BorderLayout.CENTER);
@@ -47,13 +62,7 @@ public class GameWindow extends JPanel {
 		frame.setVisible(true);
 
 		keyHandler = new KeyHandler();
-		entityHandler = new EntityHandler();
 		frame.addKeyListener(keyHandler);
-
-		entityHandler.addEntity(new Walker(100, 100));
-		entityHandler.addEntity(player);
-		
-		player.inventory.addItem(new Bread());
 
 		long t = System.currentTimeMillis();
 		long dt = 0;
@@ -62,6 +71,7 @@ public class GameWindow extends JPanel {
 			frame.repaint();
 			if (dt > 20) {
 				entityHandler.tick(tileHandler);
+				tileHandler.updateTiles(entityHandler, player);
 				t = System.currentTimeMillis();
 			}
 
@@ -113,8 +123,7 @@ public class GameWindow extends JPanel {
 	}
 
 	public GameWindow() {
-		player = new Player(0, 0, 0, 1);
-		tileHandler = new TileHandler();
+
 	}
 
 }

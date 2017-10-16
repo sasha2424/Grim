@@ -2,8 +2,16 @@ package terrain;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import entities.Bush;
 import entities.Entity;
@@ -18,30 +26,56 @@ public class TileHandler {
 
 	public static final int GRID_SIZE = 50;
 
+	// will be referred to as action border
+	// area where all tiles are loaded
+	public static final int LOAD_SIZE = 2;
+
+	private double seed = 0;
+
 	private static ArrayList<Tile> tiles;
 
-	private Tile playerTile;
+	private static final String SAVE_PATH = "C:\\Users\\sasha\\Desktop\\JAVA\\RPG\\Adventure\\tiles";
+	// TODO move to main class
 
-	public TileHandler() {
+	public TileHandler(double seed, EntityHandler e) {
 		tiles = new ArrayList<Tile>();
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				Tile t = new Tile(i, j, 30 * (int) (Math.random() * 4));
-				tiles.add(t);
-			}
-		}
-		playerTile = tiles.get(0);
 
+		seed = 100;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void renderAll(Graphics g, EntityHandler e, double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
-			tiles.get(i).draw(g, this, rotation, player,
-					getTileHeight(absToBoard(player.getX()), absToBoard(player.getY())));
-			e.renderEntitiesAt(g, tiles.get(i), player, rotation, tiles.get(i).getH());
+			tiles.get(i).draw(g, this, rotation, player, getPlayerHeight(player));
+			e.renderEntitiesAt(g, tiles.get(i), getPlayerHeight(player), player, rotation);
 		}
+	}
+
+	public void updateTiles(EntityHandler e, Player player) {
+
+		tiles.clear();
+
+		int x = player.getBoardX();
+		int y = player.getBoardY();
+
+		// create new tiles
+		for (int i = -LOAD_SIZE + x; i < LOAD_SIZE + x; i++) {
+			for (int j = -LOAD_SIZE + y; j < LOAD_SIZE + y; j++) {
+				if (getTile(i, j) == null) {
+					Tile t = new Tile(i, j, terrainHeight(i, j), getBiome(i, j));
+					tiles.add(t);
+				}
+			}
+		}
+	}
+
+	public static double terrainHeight(int x, int y) {
+		return 50 * Math.cos(x * 10) + 50 * Math.sin(y * 10) + 50;
+	}
+
+	public static Biome getBiome(int x, int y) {
+		return new Desert();
 	}
 
 	public double[] getAdjacentTileHeights(int x, int y) {
@@ -64,20 +98,11 @@ public class TileHandler {
 	}
 
 	public static double getPlayerHeight(Player p) {
-		return getTileHeight(p.getBoardX(), p.getBoardY());
-	}
-
-	public static double getTileHeight(int x, int y) {
-		for (Tile t : tiles) {
-			if (t.getBoardX() == x && t.getBoardY() == y) {
-				return t.getH();
-			}
-		}
-		return 0;
+		return terrainHeight(p.getBoardX(), p.getBoardY());
 	}
 
 	/**
-	 * Takes in absX and absY and returns the corresponding tile
+	 * Takes in x and y and returns the corresponding tile
 	 * 
 	 * @param x
 	 *            x coordinate (abs)
@@ -85,9 +110,10 @@ public class TileHandler {
 	 *            y coordinate (abs)
 	 * @return Tile corresponding to the coordinates
 	 */
-	public Tile getTile(double x, double y) {
-		for (Tile t : tiles) {
-			if (t.getBoardX() == absToBoard(x) && t.getBoardY() == absToBoard(y)) {
+	public Tile getTile(int x, int y) {
+		for (int i = 0; i < tiles.size(); i++) {
+			Tile t = tiles.get(i);
+			if (t.getBoardX() == x && t.getBoardY() == y) {
 				return t;
 			}
 		}
@@ -95,7 +121,8 @@ public class TileHandler {
 	}
 
 	public static int absToBoard(double a) {
-		return (int) (a / Tile.TILE_SIZE);
+		int r = a < 0 ? (int) (a / Tile.TILE_SIZE - 1) : (int) (a / Tile.TILE_SIZE);
+		return r;
 	}
 
 }

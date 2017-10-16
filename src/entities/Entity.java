@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 
 import main.DoubleStat;
 import main.SpriteSheetLoader;
@@ -9,12 +10,13 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import terrain.Tile;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable {
 
 	// Movement and rendering
 	protected double absX, absY;
 	protected double velX, velY;
-	protected Image texture;
+	protected transient Image texture;
+	protected int textureX, textureY;
 	protected DoubleStat speed;
 
 	// battle stats
@@ -23,7 +25,7 @@ public abstract class Entity {
 	protected DoubleStat D;
 	// TODO add and Clothes Set to this ( class which keeps track of clothes
 	// equiped and each ones"thickness)
-	
+
 	protected boolean canMove;
 	protected boolean canAttack;
 	protected boolean canDie;
@@ -33,7 +35,13 @@ public abstract class Entity {
 	public Entity(double X, double Y, int x, int y) {
 		this.absX = X;
 		this.absY = Y;
-		texture = SpriteSheetLoader.getTexture(x, y);
+		textureX = x;
+		textureY = y;
+		updateTexture();
+	}
+	
+	public void updateTexture(){
+		texture = SpriteSheetLoader.getTexture(textureX, textureY);
 	}
 
 	public abstract void draw(Graphics g, Tile t, Player player, double rotation, double height);
@@ -61,7 +69,8 @@ public abstract class Entity {
 	}
 
 	public void setHP(double hP) {
-		HP.set(hP);;
+		HP.set(hP);
+		;
 	}
 
 	protected static double getX(double x, double y, double r, double Width) {

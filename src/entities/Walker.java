@@ -10,8 +10,8 @@ public class Walker extends MovingEntity {
 
 	public Walker(double X, double Y) {
 		super(X, Y, 0, 1);
-		speed = new DoubleStat(10,10);
-		
+		speed = new DoubleStat(10, 10);
+
 	}
 
 	@Override
@@ -22,18 +22,19 @@ public class Walker extends MovingEntity {
 		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, GameWindow.HEIGHT / 2));
 
 		int k = 40;
-		g.drawImage(texture, (int) (x - k / 2), (int) (y + height - k/2), k, k, null);
-
+		g.drawImage(texture, (int) (x - k / 2), (int) (y - k / 2 + height), k, k, null);
 	}
 
 	@Override
 	public void tick(EntityHandler e) {
 		Entity nearest = e.getNearestEntity(this);
-		double dx = nearest.getAbsX() - this.getAbsX();
-		double dy = nearest.getAbsY() - this.getAbsY();
-		double d = Math.sqrt(dx * dx + dy * dy);
-		velX = dx / d;
-		velY = dy / d;
+		if (nearest != null) {
+			double dx = nearest.getAbsX() - this.getAbsX();
+			double dy = nearest.getAbsY() - this.getAbsY();
+			double d = Math.sqrt(dx * dx + dy * dy);
+			velX = dx / d;
+			velY = dy / d;
+		}
 		super.move();
 	}
 

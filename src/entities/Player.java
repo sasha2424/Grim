@@ -25,11 +25,11 @@ public class Player extends Entity {
 	}
 
 	public int getBoardX() {
-		return (int) (getX() / Tile.TILE_SIZE);
+		return absToBoard(getX());
 	}
 
-	public void setX(int boardX) {
-		this.absX = boardX * Tile.TILE_SIZE;
+	public void setX(double x) {
+		this.absX = x;
 	}
 
 	public double getY() {
@@ -37,11 +37,11 @@ public class Player extends Entity {
 	}
 
 	public int getBoardY() {
-		return (int) (getY() / Tile.TILE_SIZE);
+		return absToBoard(getY());
 	}
 
-	public void setY(int boardY) {
-		this.absY = boardY * Tile.TILE_SIZE;
+	public void setY(double y) {
+		this.absY = y;
 	}
 
 	public void draw(Graphics g, Tile t, Player player, double rotation, double height) {
@@ -66,7 +66,12 @@ public class Player extends Entity {
 	@Override
 	public void tick(EntityHandler e) {
 		// TODO stuff like burns and poison and effects
-		
+
+	}
+
+	public static int absToBoard(double a) {
+		int r = a < 0 ? (int) (a / Tile.TILE_SIZE - 1) : (int) (a / Tile.TILE_SIZE);
+		return r;
 	}
 
 }
