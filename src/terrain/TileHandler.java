@@ -66,6 +66,8 @@ public class TileHandler {
 			}
 		}
 
+		// TODO update spawn in the players tile + small range
+
 	}
 
 	public static double terrainHeight(int x, int y) {
@@ -111,7 +113,7 @@ public class TileHandler {
 	 *            y coordinate (abs)
 	 * @return Tile corresponding to the coordinates
 	 */
-	public Tile getTile(int x, int y) {
+	public static Tile getTile(int x, int y) {
 		for (int i = 0; i < tiles.size(); i++) {
 			Tile t = tiles.get(i);
 			if (t.getBoardX() == x && t.getBoardY() == y) {
@@ -119,6 +121,10 @@ public class TileHandler {
 			}
 		}
 		return null;
+	}
+
+	public static Tile getPlayerTile(Player p) {
+		return getTile(p.getBoardX(), p.getBoardY());
 	}
 
 	public static int absToBoard(double a) {

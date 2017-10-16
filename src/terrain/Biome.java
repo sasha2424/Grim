@@ -14,11 +14,12 @@ public abstract class Biome implements Serializable {
 
 
 	private int tickCounter;
+	protected int tickCounterMax = 1000;
 
 	public Biome() {
 		surface = new Color(0, 0, 255);
 		ground = new Color(0, 0, 255);
-		tickCounter = 1000;
+		tickCounter = tickCounterMax;
 	}
 
 	public static Biome getBiome(int i) {
@@ -38,7 +39,7 @@ public abstract class Biome implements Serializable {
 		if (tickCounter > 0) {
 			tickCounter--;
 		} else {
-			tickCounter = 10000;
+			tickCounter = tickCounterMax;
 			return this.getSpawnSet(t);
 		}
 		return null;

@@ -19,6 +19,7 @@ import entities.EntityHandler;
 import entities.Player;
 import entities.Walker;
 import items.Bread;
+import terrain.SpawnHandler;
 import terrain.TileHandler;
 
 public class GameWindow extends JPanel {
@@ -32,6 +33,7 @@ public class GameWindow extends JPanel {
 	public static TileHandler tileHandler;
 	public static KeyHandler keyHandler;
 	public static EntityHandler entityHandler;
+	public static SpawnHandler spawnHandler;
 
 	public static double rotation = 0;
 
@@ -46,14 +48,14 @@ public class GameWindow extends JPanel {
 		player = new Player(0, 0, 0, 1);
 		entityHandler = new EntityHandler();
 
-		entityHandler.addEntity(new Walker(100, 100));
+		//entityHandler.addEntity(new Walker(100, 100));
 		entityHandler.addEntity(player);
 
-		player.inventory.addItem(new Bread());
-		player.inventory.addItem(new Bread());
-		player.inventory.addItem(new Bread());
+		//player.inventory.addItem(new Bread());
 
 		tileHandler = new TileHandler(Math.random() * 100, entityHandler);
+		
+		spawnHandler = new SpawnHandler();
 
 		JFrame frame = new JFrame("Grim");
 		frame.getContentPane().add(new GameWindow(), BorderLayout.CENTER);
@@ -112,15 +114,6 @@ public class GameWindow extends JPanel {
 		} else {
 			Tab = 0;
 		}
-	}
-
-	private void loadChunk() { // TODO make tiles serializable and make chunk
-		// loaders
-
-	}
-
-	private void UnLoadChunk() {
-
 	}
 
 	public GameWindow() {
