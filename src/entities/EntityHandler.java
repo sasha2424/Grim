@@ -3,6 +3,7 @@ package entities;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import main.GameWindow;
 import terrain.Tile;
 import terrain.TileHandler;
 
@@ -43,11 +44,11 @@ public class EntityHandler {
 		}
 	}
 
-	public void renderEntitiesAt(Graphics g, Tile t, double playerH, Player player, double rotation) {
+	public void renderEntitiesAt(GameWindow w,Graphics g, Tile t, double playerH, Player player, double rotation) {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
-				e.draw(g, t, player, rotation, playerH - t.getH());
+				e.draw(w,g, t, player, rotation, playerH - t.getH());
 			}
 		}
 	}

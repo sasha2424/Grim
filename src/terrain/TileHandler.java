@@ -30,7 +30,7 @@ public class TileHandler {
 
 	// will be referred to as action border
 	// area where all tiles are loaded
-	public static final int LOAD_SIZE = 4;//2
+	public static final int LOAD_SIZE = 4;// 2
 
 	private static ArrayList<Tile> tiles;
 
@@ -41,11 +41,11 @@ public class TileHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void renderAll(Graphics g, EntityHandler e, double rotation, Player player) {
+	public void renderAll(GameWindow w, Graphics g, EntityHandler e, double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
-			tiles.get(i).draw(g, this, rotation, player, getPlayerHeight(player));
-			e.renderEntitiesAt(g, tiles.get(i), getPlayerHeight(player), player, rotation);
+			tiles.get(i).draw(w, g, this, rotation, player, getPlayerHeight(player));
+			e.renderEntitiesAt(w, g, tiles.get(i), getPlayerHeight(player), player, rotation);
 		}
 	}
 
@@ -77,7 +77,6 @@ public class TileHandler {
 		return rand.nextInt(k + 1) * Math.cos(x * 10) + rand.nextInt(k + 1) * Math.sin(y * 10) + rand.nextInt(k + 1);
 	}
 
-	
 	public double[] getAdjacentTileHeights(int x, int y) {
 		double[] r = new double[4];
 		for (Tile t : tiles) {

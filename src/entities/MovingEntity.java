@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 
+import main.GameWindow;
 import processing.core.PApplet;
 import terrain.Tile;
 
@@ -12,7 +13,7 @@ public abstract class MovingEntity extends Entity {
 		canMove = true;
 	}
 
-	public abstract void draw(Graphics g, Tile t, Player player, double rotation, double height);
+	public abstract void draw(GameWindow w, Graphics g, Tile t, Player player, double rotation, double height);
 
 	protected void move() {
 		absX += velX;

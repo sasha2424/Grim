@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.io.Serializable;
 
 import main.DoubleStat;
+import main.GameWindow;
 import main.SpriteSheetLoader;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -44,7 +45,7 @@ public abstract class Entity implements Serializable {
 		texture = SpriteSheetLoader.getTexture(textureX, textureY);
 	}
 
-	public abstract void draw(Graphics g, Tile t, Player player, double rotation, double height);
+	public abstract void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height);
 
 	public abstract void tick(EntityHandler e);
 

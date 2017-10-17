@@ -12,10 +12,10 @@ public class Tree extends StationaryEntity {
 		super(X, Y, 0,0);
 	}
 
-	public void draw(Graphics g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {
 
-		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, GameWindow.WIDTH / 2));
-		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, GameWindow.HEIGHT / 2));
+		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
+		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
 
 		int k = 70;
 		g.drawImage(texture, (int) (x - k / 2), (int) (y + height - k), k, k, null);

@@ -44,9 +44,9 @@ public class Player extends Entity {
 		this.absY = y;
 	}
 
-	public void draw(Graphics g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {
 		int k = 30;
-		g.drawImage(texture, (int) (GameWindow.WIDTH / 2 - k / 2), (int) (GameWindow.HEIGHT / 2 - k / 2), k, k, null);
+		g.drawImage(texture, (int) (w.getCurrentWidth() / 2 - k / 2), (int) (w.getCurrentHeight() / 2 - k / 2), k, k, null);
 
 	}
 

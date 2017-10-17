@@ -15,11 +15,11 @@ public class Walker extends MovingEntity {
 	}
 
 	@Override
-	public void draw(Graphics g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {
 		// TODO draw graphics in super class method (because all the same)
 
-		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, GameWindow.WIDTH / 2));
-		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, GameWindow.HEIGHT / 2));
+		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
+		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
 
 		int k = 40;
 		g.drawImage(texture, (int) (x - k / 2), (int) (y - k / 2 + height), k, k, null);

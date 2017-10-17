@@ -15,7 +15,7 @@ import processing.core.PApplet;
 
 public class Tile implements Serializable, Comparable {
 
-	public static final double TILE_SIZE = 200; // 1600
+	public static final double TILE_SIZE = 400; // 1600
 
 	// public static final double TILE_SIZE = 100;
 
@@ -35,14 +35,14 @@ public class Tile implements Serializable, Comparable {
 		return absX < x && x < absX + TILE_SIZE && absY < y && y < absY + TILE_SIZE;
 	}
 
-	public void draw(Graphics g, TileHandler t, double rotation, Player player, double heightShift) {
+	public void draw(GameWindow w,Graphics g, TileHandler t, double rotation, Player player, double heightShift) {
 		double[] h = t.getAdjacentTileHeights(boardX, boardY);
 		// top left bottom right
 
 		double k = heightShift;
 
-		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), GameWindow.WIDTH / 2,
-				GameWindow.HEIGHT / 2);
+		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), w.getCurrentWidth() / 2,
+				w.getCurrentHeight() / 2);
 
 		g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 

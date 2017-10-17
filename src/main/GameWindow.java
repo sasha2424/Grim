@@ -22,8 +22,8 @@ public class GameWindow extends JPanel {
 	 */
 
 	private static final long serialVersionUID = 1L;
-	public static final double WIDTH = 800;
-	public static final double HEIGHT = 800;
+	private static final double WIDTH = 800;
+	private static final double HEIGHT = 800;
 	public static long SEED = (long) (Math.random() * 10);
 
 	public Point mouse;
@@ -50,8 +50,9 @@ public class GameWindow extends JPanel {
 		entityHandler.addEntity(player);
 
 		player.inventory.addItem(new Bread());
+		player.inventory.addItem(new Bread());
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 30; i++) {
 			entityHandler.addEntity(new Tree(Math.random() * 1600, Math.random() * 1600));
 			entityHandler.addEntity(new Bush(Math.random() * 1600, Math.random() * 1600));
 		}
@@ -94,7 +95,7 @@ public class GameWindow extends JPanel {
 
 			// only update, do spawn, and render when in game
 			tileHandler.updateTiles(entityHandler, player);
-			tileHandler.renderAll(g, entityHandler, rotation, player);
+			tileHandler.renderAll(this, g, entityHandler, rotation, player);
 			g.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
 
 			mouse = MouseInfo.getPointerInfo().getLocation();
@@ -109,11 +110,11 @@ public class GameWindow extends JPanel {
 			if (keyHandler.getKeyPressed(0)) {
 				player.move(rotation);
 			}
-			player.inventory.renderHandBar(g);
+			player.inventory.renderHandBar(this, g);
 		}
 		if (keyHandler.getKeyPressed(4)) { // inventory
 			Tab = 1;
-			player.inventory.render(g);
+			player.inventory.render(this, g);
 		} else {
 			Tab = 0;
 		}
@@ -121,6 +122,14 @@ public class GameWindow extends JPanel {
 
 	public GameWindow() {
 
+	}
+
+	public double getCurrentWidth() {
+		return (double) this.getSize().getWidth();
+	}
+
+	public double getCurrentHeight() {
+		return (double) this.getSize().getHeight();
 	}
 
 }

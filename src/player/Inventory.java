@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import items.Item;
 import main.GameWindow;
 
-public class Inventory implements Serializable{
+public class Inventory implements Serializable {
 	private static final int SPACING = 60;
 
 	private static final int DOWN_SHIFT = 210;
@@ -22,16 +22,16 @@ public class Inventory implements Serializable{
 		inventory.add(i);
 	}
 
-	public void render(Graphics g) {
-		g.fillRect(0, 0, (int) GameWindow.WIDTH, (int) GameWindow.HEIGHT);
+	public void render(GameWindow w, Graphics g) {
+		g.fillRect(0, 0, (int) w.getCurrentWidth(), (int) w.getCurrentHeight());
 		for (int i = 0; i < inventory.size(); i++) {
 			inventory.get(i).draw(g, i % 10 * SPACING, (int) (i / 10) * SPACING + DOWN_SHIFT);
 		}
 	}
 
-	public void renderHandBar(Graphics g) {
+	public void renderHandBar(GameWindow w, Graphics g) {
 		for (int i = 0; i < 4 && i < inventory.size(); i++) {
-			inventory.get(i).draw(g, i % 10 * SPACING * 2, GameWindow.HEIGHT - 2 * SPACING);
+			inventory.get(i).draw(g, i % 10 * SPACING * 2, w.getCurrentHeight() - 2 * SPACING);
 		}
 	}
 }
