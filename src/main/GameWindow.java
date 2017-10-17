@@ -9,9 +9,9 @@ import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import biomes.SpawnHandler;
 import entities.*;
 import items.Bread;
-import terrain.SpawnHandler;
 import terrain.TileHandler;
 
 public class GameWindow extends JPanel {
@@ -78,6 +78,7 @@ public class GameWindow extends JPanel {
 			if (dt > 20) {
 				entityHandler.tick(tileHandler);
 				t = System.currentTimeMillis();
+				spawnHandler.spawnEntities(entityHandler, player);
 			}
 
 		}

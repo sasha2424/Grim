@@ -18,7 +18,7 @@ public abstract class Biome implements Serializable {
 	private Color ground;
 
 	private int tickCounter;
-	protected int tickCounterMax = 1000;
+	protected int tickCounterMax = 100;
 
 	public Biome() {
 		surface = new Color(0, 0, 255);
@@ -37,16 +37,6 @@ public abstract class Biome implements Serializable {
 
 	public Color getGroundColor() {
 		return ground;
-	}
-
-	public ArrayList<Entity> getSpawn(Tile t) {
-		if (tickCounter > 0) {
-			tickCounter--;
-		} else {
-			tickCounter = tickCounterMax;
-			return this.getSpawnSet(t);
-		}
-		return null;
 	}
 
 	abstract ArrayList<Entity> getSpawnSet(Tile t);
