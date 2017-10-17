@@ -82,12 +82,15 @@ public class EntityHandler {
 		}
 		return closest;
 	}
-	public Entity getNearestEntity(Entity e,String name) {
+
+	public Entity getNearestEntity(Entity e, String name) {
 		Entity closest = null;
 		for (int i = 0; i < entities.size(); i++) {
 			if (closest == null && entities.get(i) != e && entities.get(i).getName().equals(name)) {
 				closest = entities.get(i);
-			} else if (entities.get(i) != e && dist(e, closest) > dist(e, entities.get(i)) && entities.get(i).getName().equals(name)) {
+			}
+			if (closest != null && entities.get(i) != e && dist(e, closest) > dist(e, entities.get(i))
+					&& entities.get(i).getName().equals(name)) {
 				closest = entities.get(i);
 			}
 		}
