@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import biomes.Biome;
+import biomes.Desert;
 import entities.Bush;
 import entities.Entity;
 import entities.EntityHandler;
@@ -29,8 +31,6 @@ public class TileHandler {
 	// will be referred to as action border
 	// area where all tiles are loaded
 	public static final int LOAD_SIZE = 2;
-
-	private static long seed = 0;
 
 	private static ArrayList<Tile> tiles;
 
@@ -50,7 +50,7 @@ public class TileHandler {
 	}
 
 	public void updateTiles(EntityHandler e, Player player) {
-
+		// TODO make more effective
 		tiles.clear();
 
 		int x = player.getBoardX();
@@ -60,7 +60,7 @@ public class TileHandler {
 		for (int i = -LOAD_SIZE + x; i < LOAD_SIZE + x; i++) {
 			for (int j = -LOAD_SIZE + y; j < LOAD_SIZE + y; j++) {
 				if (getTile(i, j) == null) {
-					Tile t = new Tile(i, j, terrainHeight(i, j), getBiome(i, j));
+					Tile t = new Tile(i, j, terrainHeight(i, j), Biome.getBiome(i, j));
 					tiles.add(t);
 				}
 			}
@@ -71,16 +71,13 @@ public class TileHandler {
 	}
 
 	public static double terrainHeight(int x, int y) {
-		Random rand = new Random(seed);
+		Random rand = new Random(GameWindow.SEED);
 		int k = 100;// max tile height
 
 		return rand.nextInt(k + 1) * Math.cos(x * 10) + rand.nextInt(k + 1) * Math.sin(y * 10) + rand.nextInt(k + 1);
 	}
 
-	public static Biome getBiome(int x, int y) {
-		return new Desert();
-	}
-
+	
 	public double[] getAdjacentTileHeights(int x, int y) {
 		double[] r = new double[4];
 		for (Tile t : tiles) {

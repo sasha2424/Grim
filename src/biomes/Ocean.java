@@ -1,20 +1,20 @@
-package terrain;
+package biomes;
 
 import java.awt.Color;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import entities.Entity;
 import entities.Walker;
+import terrain.Tile;
 
-public class Desert extends Biome{
+public class Ocean extends Biome{
 	
-	public Desert(){
+	public Ocean(){
 		super();
 	}
 	
 	public Color getSurfaceColor(){
-		return new Color(255,206,71);
+		return new Color(48,93,255);
 	}
 	public Color getGroundColor(){
 		return new Color(150,135,94);

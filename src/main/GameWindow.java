@@ -1,32 +1,30 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
+
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import entities.EntityHandler;
-import entities.Player;
-import entities.Walker;
+import entities.*;
 import items.Bread;
 import terrain.SpawnHandler;
 import terrain.TileHandler;
 
 public class GameWindow extends JPanel {
 
+	/*
+	 * Don't Forget Graphics are done in GIMP
+	 * 
+	 */
+
 	private static final long serialVersionUID = 1L;
 	public static final double WIDTH = 800;
 	public static final double HEIGHT = 800;
+	public static long SEED = (long) (Math.random() * 10);
 
 	public Point mouse;
 
@@ -48,13 +46,18 @@ public class GameWindow extends JPanel {
 		player = new Player(0, 0, 0, 1);
 		entityHandler = new EntityHandler();
 
-		//entityHandler.addEntity(new Walker(100, 100));
+		entityHandler.addEntity(new Walker(-800, -800));
 		entityHandler.addEntity(player);
 
-		//player.inventory.addItem(new Bread());
+		player.inventory.addItem(new Bread());
+
+		for (int i = 0; i < 100; i++) {
+			entityHandler.addEntity(new Tree(Math.random() * 1600, Math.random() * 1600));
+			entityHandler.addEntity(new Bush(Math.random() * 1600, Math.random() * 1600));
+		}
 
 		tileHandler = new TileHandler(Math.random() * 100, entityHandler);
-		
+
 		spawnHandler = new SpawnHandler();
 
 		JFrame frame = new JFrame("Grim");

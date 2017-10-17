@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import biomes.Biome;
 import entities.Entity;
 import entities.Player;
 import main.GameWindow;
@@ -14,7 +15,7 @@ import processing.core.PApplet;
 
 public class Tile implements Serializable, Comparable {
 
-	public static final double TILE_SIZE = 1600; // 1600
+	public static final double TILE_SIZE = 200; // 1600
 
 	// public static final double TILE_SIZE = 100;
 
@@ -43,34 +44,34 @@ public class Tile implements Serializable, Comparable {
 		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(), GameWindow.WIDTH / 2,
 				GameWindow.HEIGHT / 2);
 
-		g.setColor(TileHandler.getBiome(boardX, boardY).getGroundColor());
+		g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 
 		if (Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2) {
 			rect(g, C[0][0], C[1][0] - H + k, C[0][3], C[1][3] - H + k, C[0][3], C[1][3] - h[0] + k, C[0][0],
 					C[1][0] - h[0] + k);
 		}
 
-		g.setColor(TileHandler.getBiome(boardX, boardY).getGroundColor());
+		g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 
 		if (Math.PI < rotation && rotation < 2 * Math.PI) {
 			rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][1], C[1][1] - h[1] + k, C[0][0],
 					C[1][0] - h[1] + k);
 		}
-		g.setColor(TileHandler.getBiome(boardX, boardY).getGroundColor());
+		g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 
 		if (!(Math.PI / 2 < rotation && rotation < 3 * Math.PI / 2)) {
 			rect(g, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[2] + k, C[0][1],
 					C[1][1] - h[2] + k);
 		}
 
-		g.setColor(TileHandler.getBiome(boardX, boardY).getGroundColor());
+		g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 
 		if (0 < rotation && rotation < Math.PI) {
 			rect(g, C[0][3], C[1][3] - H + k, C[0][2], C[1][2] - H + k, C[0][2], C[1][2] - h[3] + k, C[0][3],
 					C[1][3] - h[3] + k);
 		}
 
-		g.setColor(TileHandler.getBiome(boardX, boardY).getSurfaceColor());
+		g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
 
 		rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
 	}
