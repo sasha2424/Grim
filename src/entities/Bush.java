@@ -10,6 +10,7 @@ public class Bush extends StationaryEntity {
 
 	public Bush(double X, double Y) {
 		super(X, Y, 0, 2);
+		name = "bush";
 	}
 
 	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {

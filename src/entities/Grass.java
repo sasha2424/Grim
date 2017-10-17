@@ -10,6 +10,7 @@ public class Grass extends StationaryEntity {
 
 	public Grass(double X, double Y) {
 		super(X, Y, 0, 3);
+		name = "grass";
 	}
 
 	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {

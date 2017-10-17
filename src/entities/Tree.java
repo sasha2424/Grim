@@ -10,6 +10,7 @@ public class Tree extends StationaryEntity {
 
 	public Tree(double X, double Y) {
 		super(X, Y, 0,0);
+		name = "tree";
 	}
 
 	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {

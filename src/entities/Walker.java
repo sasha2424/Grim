@@ -11,6 +11,7 @@ public class Walker extends MovingEntity {
 	public Walker(double X, double Y) {
 		super(X, Y, 0, 1);
 		speed = new DoubleStat(10, 10);
+		name = "walker";
 
 	}
 
@@ -27,7 +28,7 @@ public class Walker extends MovingEntity {
 
 	@Override
 	public void tick(EntityHandler e) {
-		Entity nearest = e.getNearestEntity(this);
+		Entity nearest = e.getNearestEntity(this,"player");
 		if (nearest != null) {
 			double dx = nearest.getAbsX() - this.getAbsX();
 			double dy = nearest.getAbsY() - this.getAbsY();

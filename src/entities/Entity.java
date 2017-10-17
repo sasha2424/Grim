@@ -13,6 +13,8 @@ import terrain.Tile;
 
 public abstract class Entity implements Serializable {
 
+	protected String name;
+
 	// Movement and rendering
 	protected double absX, absY;
 	protected double velX, velY;
@@ -40,12 +42,12 @@ public abstract class Entity implements Serializable {
 		textureY = y;
 		updateTexture();
 	}
-	
-	public void updateTexture(){
+
+	public void updateTexture() {
 		texture = SpriteSheetLoader.getTexture(textureX, textureY);
 	}
 
-	public abstract void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height);
+	public abstract void draw(GameWindow w, Graphics g, Tile t, Player player, double rotation, double height);
 
 	public abstract void tick(EntityHandler e);
 
@@ -80,6 +82,10 @@ public abstract class Entity implements Serializable {
 
 	protected static double getY(double x, double y, double r, double Height) {
 		return (y) * Math.cos(r) + (x) * Math.sin(r) + Height;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

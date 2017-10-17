@@ -44,11 +44,11 @@ public class EntityHandler {
 		}
 	}
 
-	public void renderEntitiesAt(GameWindow w,Graphics g, Tile t, double playerH, Player player, double rotation) {
+	public void renderEntitiesAt(GameWindow w, Graphics g, Tile t, double playerH, Player player, double rotation) {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
-				e.draw(w,g, t, player, rotation, playerH - t.getH());
+				e.draw(w, g, t, player, rotation, playerH - t.getH());
 			}
 		}
 	}
@@ -77,6 +77,17 @@ public class EntityHandler {
 			if (closest == null && entities.get(i) != e) {
 				closest = entities.get(i);
 			} else if (entities.get(i) != e && dist(e, closest) > dist(e, entities.get(i))) {
+				closest = entities.get(i);
+			}
+		}
+		return closest;
+	}
+	public Entity getNearestEntity(Entity e,String name) {
+		Entity closest = null;
+		for (int i = 0; i < entities.size(); i++) {
+			if (closest == null && entities.get(i) != e && entities.get(i).getName().equals(name)) {
+				closest = entities.get(i);
+			} else if (entities.get(i) != e && dist(e, closest) > dist(e, entities.get(i)) && entities.get(i).getName().equals(name)) {
 				closest = entities.get(i);
 			}
 		}
