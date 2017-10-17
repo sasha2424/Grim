@@ -29,8 +29,8 @@ public class Jungle extends Biome{
 
 		// CHECK - can be out side of tile without causing problems.
 
-		double x = Math.random() * t.getH() + t.getAbsX();
-		double y = Math.random() * t.getH() + t.getAbsY();
+		double x = Math.random() * Tile.TILE_SIZE + t.getAbsX();
+		double y = Math.random() * Tile.TILE_SIZE + t.getAbsY();
 		spawn.add(new Walker(x, y));
 
 		return spawn;
