@@ -30,7 +30,7 @@ public class TileHandler {
 
 	// will be referred to as action border
 	// area where all tiles are loaded
-	public static final int LOAD_SIZE = 2;
+	public static final int LOAD_SIZE = 4;//2
 
 	private static ArrayList<Tile> tiles;
 

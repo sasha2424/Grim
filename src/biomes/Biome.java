@@ -92,25 +92,16 @@ public abstract class Biome implements Serializable {
 			return new Desert();
 		}
 		if (k == 1) {
-			return new Desert();
+			return new Plain();
 		}
 		if (k == 2) {
-			return new Desert();
+			return new Forrest();
 		}
 		if (k == 3) {
-			return new Desert();
+			return new Jungle();
 		}
 		if (k == 4) {
-			return new Desert();
-		}
-		if (k == 5) {
-			return new Desert();
-		}
-		if (k == 6) {
-			return new Desert();
-		}
-		if (k == 7) {
-			return new Desert();
+			return new Ocean();
 		}
 		return new Desert();
 	}
