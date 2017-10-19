@@ -15,7 +15,7 @@ import processing.core.PApplet;
 
 public class Tile implements Serializable, Comparable {
 
-	public static final double TILE_SIZE = 400; // 1600
+	public static final double TILE_SIZE = 1600; // 1600
 
 	// public static final double TILE_SIZE = 100;
 

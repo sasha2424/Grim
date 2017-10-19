@@ -20,6 +20,8 @@ public class GameWindow extends JPanel {
 	 * Don't Forget Graphics are done in GIMP
 	 * 
 	 */
+	
+	
 
 	private static final long serialVersionUID = 1L;
 	private static final double WIDTH = 800;

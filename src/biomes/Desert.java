@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import entities.Entity;
+import entities.Player;
 import entities.Walker;
 import terrain.Tile;
 
@@ -23,7 +24,7 @@ public class Desert extends Biome{
 	
 	
 	@Override 
-	protected ArrayList<Entity> getSpawnSet(Tile t){
+	protected ArrayList<Entity> getSpawnSet(Player p, Tile t){
 		ArrayList<Entity> spawn = new ArrayList<Entity>();
 
 		// spawn in any entity on tile
@@ -32,6 +33,7 @@ public class Desert extends Biome{
 
 		double x = Math.random() * Tile.TILE_SIZE + t.getAbsX();
 		double y = Math.random() * Tile.TILE_SIZE + t.getAbsY();
+		
 		spawn.add(new Walker(x, y));
 
 		return spawn;

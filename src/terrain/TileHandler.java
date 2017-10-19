@@ -30,7 +30,7 @@ public class TileHandler {
 
 	// will be referred to as action border
 	// area where all tiles are loaded
-	public static final int LOAD_SIZE = 4;// 2
+	public static final int LOAD_SIZE = 2;// 2
 
 	private static ArrayList<Tile> tiles;
 
@@ -71,10 +71,9 @@ public class TileHandler {
 	}
 
 	public static double terrainHeight(int x, int y) {
-		Random rand = new Random(GameWindow.SEED);
-		int k = 100;// max tile height
+		Random rand = new Random(GameWindow.SEED + 1398*x + 1412*y);
 
-		return rand.nextInt(k + 1) * Math.cos(x * 10) + rand.nextInt(k + 1) * Math.sin(y * 10) + rand.nextInt(k + 1);
+		return 10*rand.nextInt(5);
 	}
 
 	public double[] getAdjacentTileHeights(int x, int y) {

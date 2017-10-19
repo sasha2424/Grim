@@ -1,8 +1,5 @@
 package biomes;
 
-import java.util.ArrayList;
-
-import entities.Entity;
 import entities.EntityHandler;
 import entities.Player;
 import terrain.TileHandler;
@@ -10,7 +7,7 @@ import terrain.TileHandler;
 public class SpawnHandler {
 
 	private int timer = 0; // timer for when mobs are spawned
-	private int timerLimitMax = 500;
+	private int timerLimitMax = 1000;
 	private int timerLimit = (int) (Math.random() * timerLimitMax);
 
 	public SpawnHandler() {
@@ -24,7 +21,7 @@ public class SpawnHandler {
 			timer = 0;
 			
 			// get spawn for biome at the player tile
-			e.addEntities(Biome.getBiome(p.getBoardX(), p.getBoardY()).getSpawnSet(TileHandler.getPlayerTile(p)));
+			e.addEntities(Biome.getBiome(p.getBoardX(), p.getBoardY()).getSpawnSet(p,TileHandler.getPlayerTile(p)));
 		}
 
 	}

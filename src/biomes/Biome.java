@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entities.Entity;
+import entities.Player;
 import entities.Walker;
 import main.GameWindow;
 import terrain.Tile;
@@ -39,7 +40,7 @@ public abstract class Biome implements Serializable {
 		return ground;
 	}
 
-	abstract ArrayList<Entity> getSpawnSet(Tile t);
+	abstract ArrayList<Entity> getSpawnSet(Player p,Tile t);
 
 	public static Biome getBiome(int x, int y) {
 		int i = (int) (x / .834);

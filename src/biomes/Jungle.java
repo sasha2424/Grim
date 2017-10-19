@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import entities.Entity;
+import entities.Player;
 import entities.Walker;
 import terrain.Tile;
 
@@ -22,7 +23,7 @@ public class Jungle extends Biome{
 	
 	
 	@Override 
-	protected ArrayList<Entity> getSpawnSet(Tile t){
+	protected ArrayList<Entity> getSpawnSet(Player p,Tile t){
 		ArrayList<Entity> spawn = new ArrayList<Entity>();
 
 		// spawn in any entity on tile

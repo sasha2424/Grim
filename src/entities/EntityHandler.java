@@ -1,6 +1,11 @@
 package entities;
 
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import main.GameWindow;
@@ -105,6 +110,28 @@ public class EntityHandler {
 
 	public int getEntityCount() {
 		return entities.size();
+	}
+
+	public void saveEntities(ArrayList<Entity> entitiesToSave) {
+		try {
+			FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
+			ObjectOutputStream o = new ObjectOutputStream(f);
+
+			// Write objects to file
+			o.writeObject(entitiesToSave);
+
+			o.close();
+			f.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void loadEntities(){
+		
 	}
 
 }
