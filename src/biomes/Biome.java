@@ -48,16 +48,20 @@ public abstract class Biome implements Serializable {
 
 		Random rand = new Random(0);
 
-		int range = 2;
+		
+		int rangeout = 4;
+		int rangein = 2;
+		
 
-		// double blur of size 4
+		// blur of size 4
 		int[] count = new int[Biome.TOTAL_BIOMES];
-		for (int a = i - range; a < i + range; a++) {
-			for (int b = j - range; b < j + range; b++) {
+		for (int a = i - rangeout; a < i + rangeout; a++) {
+			for (int b = j - rangeout; b < j + rangeout; b++) {
 
+				// blur of size 2
 				int[] countin = new int[Biome.TOTAL_BIOMES];
-				for (int q = a - range; q < a + range; q++) {
-					for (int w = b - range; w < b + range; w++) {
+				for (int q = a - rangein; q < a + rangein; q++) {
+					for (int w = b - rangein; w < b + rangein; w++) {
 						rand.setSeed(GameWindow.SEED + 4713 * q + 7608 * w);
 						countin[rand.nextInt(Biome.TOTAL_BIOMES)]++;
 						// base random function

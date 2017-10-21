@@ -2,9 +2,11 @@ package entities;
 
 import java.awt.Graphics;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
@@ -127,11 +129,29 @@ public class EntityHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void loadEntities(){
-		
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Entity> loadEntities(Tile t) {
+
+		try {
+			FileInputStream fi = new FileInputStream(new File("myObjects.txt"));
+			ObjectInputStream oi = new ObjectInputStream(fi);
+
+			ArrayList<Entity> entities = (ArrayList<Entity>) oi.readObject();
+
+			oi.close();
+			fi.close();
+			return entities;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
