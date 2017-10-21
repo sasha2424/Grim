@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import entities.Entity;
 import entities.Player;
+import entities.Rat;
 import entities.Walker;
 import terrain.Tile;
 
@@ -34,7 +35,7 @@ public class Desert extends Biome{
 		double x = Math.random() * Tile.TILE_SIZE + t.getAbsX();
 		double y = Math.random() * Tile.TILE_SIZE + t.getAbsY();
 		
-		spawn.add(new Walker(x, y));
+		spawn.add(new Rat(x, y));
 
 		return spawn;
 	}

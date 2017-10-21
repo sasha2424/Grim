@@ -71,9 +71,10 @@ public class TileHandler {
 	}
 
 	public static double terrainHeight(int x, int y) {
-		Random rand = new Random(GameWindow.SEED + 1398*x + 1412*y);
+		//Random rand = new Random(GameWindow.SEED + 1398*x + 1412*y);
 
-		return 10*rand.nextInt(5);
+		//return 10*rand.nextInt(5);
+		return 0;
 	}
 
 	public double[] getAdjacentTileHeights(int x, int y) {
