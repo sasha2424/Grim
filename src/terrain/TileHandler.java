@@ -2,6 +2,7 @@ package terrain;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,7 +42,7 @@ public class TileHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void renderAll(GameWindow w, Graphics g, EntityHandler e, double rotation, Player player) {
+	public void renderAll(GameWindow w, Graphics2D g, EntityHandler e, double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
 			tiles.get(i).draw(w, g, this, rotation, player, getPlayerHeight(player));

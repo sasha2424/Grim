@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,6 +29,21 @@ public class EntityHandler {
 		}
 	}
 
+	public static double getAngle(Entity a, Entity b) {
+
+		double dx = a.getAbsX() - b.getAbsX();
+		double dy = a.getAbsY() - b.getAbsY();
+
+		if (b instanceof Player) {
+			dx -= b.getWidth()/2;
+			dy -= b.getWidth()/2;
+		}
+		double angle = Math.atan(dy / dx);
+		if (dx < 0)
+			angle += Math.PI;
+		return angle;
+	}
+
 	public void addEntity(Entity e) {
 		entities.add(e);
 	}
@@ -51,7 +67,7 @@ public class EntityHandler {
 		}
 	}
 
-	public void renderEntitiesAt(GameWindow w, Graphics g, Tile t, double playerH, Player player, double rotation) {
+	public void renderEntitiesAt(GameWindow w, Graphics2D g, Tile t, double playerH, Player player, double rotation) {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if (t.inBorder(e.getAbsX(), e.getAbsY())) {

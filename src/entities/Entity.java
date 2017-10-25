@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.Serializable;
 
@@ -18,8 +19,9 @@ public abstract class Entity implements Serializable {
 	// Movement and rendering
 	protected double absX, absY;
 	protected double velX, velY;
-	protected transient Image texture;
-	protected int textureX, textureY;
+	protected transient Image[] texture;
+	protected double width;
+	protected int[] textureX, textureY;
 	protected DoubleStat speed;
 
 	// battle stats
@@ -35,19 +37,22 @@ public abstract class Entity implements Serializable {
 	protected boolean visible;
 	protected boolean collides;
 
-	public Entity(double X, double Y, int x, int y) {
+	public Entity(double X, double Y, int[] x, int[] y) {
 		this.absX = X;
 		this.absY = Y;
 		textureX = x;
 		textureY = y;
+		texture = new Image[x.length];
 		updateTexture();
 	}
 
 	public void updateTexture() {
-		texture = SpriteSheetLoader.getTexture(textureX, textureY);
+		for (int i = 0; i < textureX.length; i++) {
+			texture[i] = SpriteSheetLoader.getTexture(textureX[i], textureY[i]);
+		}
 	}
 
-	public abstract void draw(GameWindow w, Graphics g, Tile t, Player player, double rotation, double height);
+	public abstract void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height);
 
 	public abstract void tick(EntityHandler e);
 
@@ -86,6 +91,10 @@ public abstract class Entity implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public double getWidth() {
+		return width;
 	}
 
 }

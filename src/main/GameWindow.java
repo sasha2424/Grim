@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import javax.swing.JFrame;
@@ -26,7 +27,8 @@ public class GameWindow extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static final double WIDTH = 800;
 	private static final double HEIGHT = 800;
-	public static long SEED = (long) (Math.random() * 10);
+	//public static long SEED = (long) (Math.random() * 10);
+	public static long SEED = 5;
 
 	public Point mouse;
 
@@ -40,16 +42,27 @@ public class GameWindow extends JPanel {
 	public static Player player;
 
 	public static int Tab = 0;
+	
+	
+	
+	//TODO
+	/*
+	 * add width to all entities
+	 * make tiles render with graphics
+	 * give rat actual texture
+	 * 
+	 */
 
 	public static void main(String[] args) {
 
 		SpriteSheetLoader.load();
 
-		player = new Player(0, 0, 0, 1);
+		player = new Player(0, 0, new int[]{0}, new int[]{1});
 		entityHandler = new EntityHandler();
 
-		entityHandler.addEntity(new Walker(-800, -800));
+		
 		entityHandler.addEntity(player);
+		entityHandler.addEntity(new Rat(400, 400));
 
 		player.inventory.addItem(new Bread());
 		player.inventory.addItem(new Bread());
@@ -87,19 +100,20 @@ public class GameWindow extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+		Graphics2D g2d=(Graphics2D)g;
+		super.paintComponent(g2d);
 
-		g.setColor(Color.white);
-		g.fillRect(0, 0, (int) GameWindow.WIDTH, (int) GameWindow.HEIGHT);
+		g2d.setColor(Color.white);
+		g2d.fillRect(0, 0, (int) GameWindow.WIDTH, (int) GameWindow.HEIGHT);
 
-		g.setColor(Color.red);
+		g2d.setColor(Color.red);
 
 		if (Tab == 0) { // in game
 
 			// only update, do spawn, and render when in game
 			tileHandler.updateTiles(entityHandler, player);
-			tileHandler.renderAll(this, g, entityHandler, rotation, player);
-			g.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
+			tileHandler.renderAll(this, g2d, entityHandler, rotation, player);
+			g2d.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
 
 			mouse = MouseInfo.getPointerInfo().getLocation();
 
@@ -113,11 +127,11 @@ public class GameWindow extends JPanel {
 			if (keyHandler.getKeyPressed(0)) {
 				player.move(rotation);
 			}
-			player.inventory.renderHandBar(this, g);
+			player.inventory.renderHandBar(this, g2d);
 		}
 		if (keyHandler.getKeyPressed(4)) { // inventory
 			Tab = 1;
-			player.inventory.render(this, g);
+			player.inventory.render(this, g2d);
 		} else {
 			Tab = 0;
 		}

@@ -3,6 +3,7 @@ package terrain;
 import java.awt.Color;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class Tile implements Serializable, Comparable {
 		return absX < x && x < absX + TILE_SIZE && absY < y && y < absY + TILE_SIZE;
 	}
 
-	public void draw(GameWindow w, Graphics g, TileHandler t, double rotation, Player player, double heightShift) {
+	public void draw(GameWindow w, Graphics2D g, TileHandler t, double rotation, Player player, double heightShift) {
 		double[] h = t.getAdjacentTileHeights(boardX, boardY);
 		// top left bottom right
 

@@ -1,6 +1,8 @@
 package entities;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 import main.DoubleStat;
 import main.GameWindow;
@@ -9,26 +11,26 @@ import terrain.Tile;
 public class Walker extends MovingEntity {
 
 	public Walker(double X, double Y) {
-		super(X, Y, 0, 1);
+		super(X, Y, new int[] { 0 }, new int[] { 1 });
 		speed = new DoubleStat(10, 10);
 		name = "walker";
 
 	}
 
 	@Override
-	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
 		// TODO draw graphics in super class method (because all the same)
 
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
 		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
 
 		int k = 40;
-		g.drawImage(texture, (int) (x - k / 2), (int) (y - k / 2 + height), k, k, null);
+		g.drawImage(texture[0], (int) (x - k / 2), (int) (y - k / 2 + height), k, k, null);
 	}
 
 	@Override
 	public void tick(EntityHandler e) {
-		Entity nearest = e.getNearestEntity(this,"player");
+		Entity nearest = e.getNearestEntity(this, "player");
 		if (nearest != null) {
 			double dx = nearest.getAbsX() - this.getAbsX();
 			double dy = nearest.getAbsY() - this.getAbsY();

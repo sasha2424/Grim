@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import main.GameWindow;
 import main.KeyHandler;
@@ -15,9 +16,10 @@ public class Player extends MovingEntity {
 	public static final double speed = 2;
 	public Inventory inventory;
 
-	public Player(int X, int Y, int x, int y) {
+	public Player(int X, int Y, int[] x, int[] y) {
 		super(X, Y, x, y);
 		this.name = "player";
+		width = 30;
 		inventory = new Inventory();
 	}
 
@@ -45,9 +47,8 @@ public class Player extends MovingEntity {
 		this.absY = y;
 	}
 
-	public void draw(GameWindow w,Graphics g, Tile t, Player player, double rotation, double height) {
-		int k = 30;
-		g.drawImage(texture, (int) (w.getCurrentWidth() / 2 - k / 2), (int) (w.getCurrentHeight() / 2 - k / 2), k, k, null);
+	public void draw(GameWindow w,Graphics2D g, Tile t, Player player, double rotation, double height) {
+		g.drawImage(texture[0], (int) (w.getCurrentWidth() / 2 - width / 2), (int) (w.getCurrentHeight() / 2 - width / 2), (int)width, (int)width, null);
 
 	}
 

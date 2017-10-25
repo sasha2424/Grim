@@ -10,34 +10,37 @@ import entities.Rat;
 import entities.Walker;
 import terrain.Tile;
 
-public class Desert extends Biome{
-	
-	public Desert(){
+public class Desert extends Biome {
+
+	public Desert() {
 		super();
 	}
-	
-	public Color getSurfaceColor(){
-		return new Color(255,206,71);
+
+	public Color getSurfaceColor() {
+		return new Color(255, 206, 71);
 	}
-	public Color getGroundColor(){
-		return new Color(150,135,94);
+
+	public Color getGroundColor() {
+		return new Color(150, 135, 94);
 	}
-	
-	
-	@Override 
-	protected ArrayList<Entity> getSpawnSet(Player p, Tile t){
-		ArrayList<Entity> spawn = new ArrayList<Entity>();
 
-		// spawn in any entity on tile
+	@Override
+	protected ArrayList<Entity> getSpawnSet(Player p, Tile t) {
+		if (t != null) {
+			ArrayList<Entity> spawn = new ArrayList<Entity>();
 
-		// CHECK - can be out side of tile without causing problems.
+			// spawn in any entity on tile
 
-		double x = Math.random() * Tile.TILE_SIZE + t.getAbsX();
-		double y = Math.random() * Tile.TILE_SIZE + t.getAbsY();
-		
-		spawn.add(new Rat(x, y));
+			// CHECK - can be out side of tile without causing problems.
 
-		return spawn;
+			double x = Math.random() * Tile.TILE_SIZE + t.getAbsX();
+			double y = Math.random() * Tile.TILE_SIZE + t.getAbsY();
+
+			spawn.add(new Rat(x, y));
+
+			return spawn;
+		}
+		return null;
 	}
 
 }
