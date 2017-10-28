@@ -1,11 +1,13 @@
 package biomes;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import entities.Entity;
 import entities.Player;
 import entities.Walker;
+import main.SpriteSheetLoader;
 import terrain.Tile;
 
 public class Forrest extends Biome{
@@ -21,6 +23,9 @@ public class Forrest extends Biome{
 		return new Color(150,135,94);
 	}
 	
+	public Image getSurfaceTexture() {
+		return SpriteSheetLoader.getTexture(1, 1);
+	}
 	
 	@Override 
 	protected ArrayList<Entity> getSpawnSet(Player p,Tile t){

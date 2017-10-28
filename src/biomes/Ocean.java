@@ -1,11 +1,13 @@
 package biomes;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import entities.Entity;
 import entities.Player;
 import entities.Walker;
+import main.SpriteSheetLoader;
 import terrain.Tile;
 
 public class Ocean extends Biome{
@@ -19,6 +21,10 @@ public class Ocean extends Biome{
 	}
 	public Color getGroundColor(){
 		return new Color(150,135,94);
+	}
+	
+	public Image getSurfaceTexture() {
+		return SpriteSheetLoader.getTexture(1, 4);
 	}
 	
 	

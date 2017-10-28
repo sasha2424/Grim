@@ -45,7 +45,7 @@ public class TileHandler {
 	public void renderAll(GameWindow w, Graphics2D g, EntityHandler e, double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
-			tiles.get(i).draw(w, g, this, rotation, player, getPlayerHeight(player));
+			tiles.get(i).draw(w, g, this, rotation, player);
 			e.renderEntitiesAt(w, g, tiles.get(i), getPlayerHeight(player), player, rotation);
 		}
 	}

@@ -1,6 +1,7 @@
 package biomes;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import entities.Entity;
 import entities.Player;
 import entities.Rat;
 import entities.Walker;
+import main.SpriteSheetLoader;
 import terrain.Tile;
 
 public class Desert extends Biome {
@@ -22,6 +24,10 @@ public class Desert extends Biome {
 
 	public Color getGroundColor() {
 		return new Color(150, 135, 94);
+	}
+
+	public Image getSurfaceTexture() {
+		return SpriteSheetLoader.getTexture(1, 0);
 	}
 
 	@Override

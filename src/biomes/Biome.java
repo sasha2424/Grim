@@ -1,6 +1,7 @@
 package biomes;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,6 +10,7 @@ import entities.Entity;
 import entities.Player;
 import entities.Walker;
 import main.GameWindow;
+import main.SpriteSheetLoader;
 import terrain.Tile;
 
 public abstract class Biome implements Serializable {
@@ -16,6 +18,7 @@ public abstract class Biome implements Serializable {
 	public static final int TOTAL_BIOMES = 5;
 
 	private Color surface;
+	protected Image texture;
 	private Color ground;
 
 	private int tickCounter;
@@ -39,6 +42,8 @@ public abstract class Biome implements Serializable {
 	public Color getGroundColor() {
 		return ground;
 	}
+	
+	abstract Image getSurfaceTexture();
 
 	abstract ArrayList<Entity> getSpawnSet(Player p,Tile t);
 
