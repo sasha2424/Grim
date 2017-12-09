@@ -124,11 +124,11 @@ public class Tile implements Serializable, Comparable {
 		}
 
 		// set surface color
-		// g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
+		 g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
 
 		// draw tile surface
-		// rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2],
-		// C[1][2] - H + k, C[0][3], C[1][3] - H + k);
+		 rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2],
+		 C[1][2] - H + k, C[0][3], C[1][3] - H + k);
 
 		/*
 		 * //TODO put in a loop 
