@@ -45,7 +45,7 @@ public class TileHandler {
 	public void renderAll(GameWindow w, Graphics2D g, EntityHandler e, double rotation, Player player) {
 		Collections.sort(tiles);
 		for (int i = 0; i < tiles.size(); i++) {
-			tiles.get(i).draw(w, g, this, rotation, player);
+			tiles.get(i).draw(w, g, rotation, player);
 			e.renderEntitiesAt(w, g, tiles.get(i), getPlayerHeight(player), player, rotation);
 		}
 	}
@@ -72,13 +72,13 @@ public class TileHandler {
 	}
 
 	public static double terrainHeight(int x, int y) {
-		//Random rand = new Random(GameWindow.SEED + 1398*x + 1412*y);
+		Random rand = new Random(GameWindow.SEED + 1398*x + 1412*y);
 
-		//return 10*rand.nextInt(5);
-		return 0;
+		return 50*rand.nextInt(5);
+		//return 0;
 	}
 
-	public double[] getAdjacentTileHeights(int x, int y) {
+	public static double[] getAdjacentTileHeights(int x, int y) {
 		double[] r = new double[4];
 		for (Tile t : tiles) {
 			if (t.getBoardX() == x && t.getBoardY() == y - 1) {

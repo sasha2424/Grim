@@ -43,6 +43,8 @@ public class Rat extends MovingEntity {
 
 		g.rotate(-angle - rotation + Math.PI / 2);
 		g.translate(-x, -y - height);
+		
+		
 		// g.drawImage(texture, (int) (x - k / 2), (int) (y - k / 2 + height),
 		// k, k, null);
 

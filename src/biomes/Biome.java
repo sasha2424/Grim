@@ -43,7 +43,7 @@ public abstract class Biome implements Serializable {
 		return ground;
 	}
 	
-	abstract Image getSurfaceTexture();
+	public abstract Image getSurfaceTexture();
 
 	abstract ArrayList<Entity> getSpawnSet(Player p,Tile t);
 

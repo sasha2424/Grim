@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 import biomes.Biome;
 import entities.Entity;
@@ -45,7 +46,7 @@ public class Tile implements Serializable, Comparable {
 		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(),
 				w.getCurrentWidth() / 2, w.getCurrentHeight() / 2);
 
-		//don't draw walls if tile is at ground level
+		// don't draw walls if tile is at ground level
 		if (H != 0) {
 			g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 
@@ -74,25 +75,25 @@ public class Tile implements Serializable, Comparable {
 						C[1][3] - h[3] + k);
 			}
 		}
-		
-		//Surface color
-		g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
 
+		// Surface color
+		g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
 		rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
+
 	}
-	
-	
-	public void draw(GameWindow w, Graphics2D g, TileHandler t, double rotation, Player player) {
-		double[] h = t.getAdjacentTileHeights(boardX, boardY);
+
+	public void draw(GameWindow w, Graphics2D g, double rotation, Player player) {
+		double[] h = TileHandler.getAdjacentTileHeights(boardX, boardY);
 		// top left bottom right
 
 		double k = TileHandler.getPlayerHeight(player);
-		
 
 		double[][] C = getCoords(rotation, TILE_SIZE, absX - player.getX(), absY - player.getY(),
 				w.getCurrentWidth() / 2, w.getCurrentHeight() / 2);
 
-		//don't draw walls if tile is at ground level
+		H = TileHandler.getTile(this.getBoardX(), this.getBoardY()).getH();
+
+		// don't draw walls if tile is at ground level
 		if (H != 0) {
 			g.setColor(Biome.getBiome(boardX, boardY).getGroundColor());
 
@@ -121,11 +122,40 @@ public class Tile implements Serializable, Comparable {
 						C[1][3] - h[3] + k);
 			}
 		}
-		
-		
-		g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
 
-		rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2], C[1][2] - H + k, C[0][3], C[1][3] - H + k);
+		// set surface color
+		// g.setColor(Biome.getBiome(boardX, boardY).getSurfaceColor());
+
+		// draw tile surface
+		// rect(g, C[0][0], C[1][0] - H + k, C[0][1], C[1][1] - H + k, C[0][2],
+		// C[1][2] - H + k, C[0][3], C[1][3] - H + k);
+
+		/*
+		 * //TODO put in a loop 
+		 * //TODO can this be cleaner? 
+		 * 
+		 * SUPER LAGGY BUT PUTS
+		 * TEXTURE ON GROUND
+		 * 
+		 * g.translate(w.getCurrentWidth() / 2, w.getCurrentHeight() / 2);
+		 * g.rotate(rotation); 
+		 * g.translate(this.getAbsX() - player.getX(),this.getAbsY() - player.getY()); 
+		 * g.rotate(-rotation); 
+		 * g.translate(0,- H + k); 
+		 * g.rotate(rotation);
+		 * 
+		 * g.drawImage(Biome.getBiome(boardX, boardY).getSurfaceTexture(), 0, 0,
+		 * 1600, 1600, null); // magic number
+		 * 
+		 * g.rotate(-rotation); 
+		 * g.translate(0, H - k); 
+		 * g.rotate(rotation);
+		 * g.translate(-this.getAbsX() + player.getX(), -this.getAbsY() +player.getY()); 
+		 * g.rotate(-rotation); 
+		 * g.translate(-w.getCurrentWidth()/ 2, -w.getCurrentHeight() / 2);
+		 * 
+		 */
+
 	}
 
 	private static double getX(double x, double y, double r, double Width) {
