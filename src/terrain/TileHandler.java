@@ -72,10 +72,10 @@ public class TileHandler {
 	}
 
 	public static double terrainHeight(int x, int y) {
-		Random rand = new Random(GameWindow.SEED + 1398*x + 1412*y);
+		Random rand = new Random(GameWindow.SEED + 1398 * x + 1412 * y);
 
-		return 50*rand.nextInt(5);
-		//return 0;
+		return 50 * rand.nextInt(5);
+		// return 0;
 	}
 
 	public static double[] getAdjacentTileHeights(int x, int y) {
@@ -127,6 +127,45 @@ public class TileHandler {
 	public static int absToBoard(double a) {
 		int r = a < 0 ? (int) (a / Tile.TILE_SIZE - 1) : (int) (a / Tile.TILE_SIZE);
 		return r;
+	}
+
+	
+	//load tiles when players location changes
+	public void LoadTiles(Player player) {
+		for (int i = -LOAD_SIZE + player.getBoardX(); i < LOAD_SIZE + player.getBoardX(); i++) {
+			for (int j = -LOAD_SIZE + player.getBoardY(); j < LOAD_SIZE + player.getBoardY(); j++) {
+				boolean foundTile = false;
+				for (int t = 0; t < tiles.size(); t++) {
+					if(tiles.get(t).getBoardX() == i && tiles.get(t).getBoardY() == j){
+						foundTile = true;
+						break;
+					}
+				}
+				if(!foundTile){
+					tiles.add(loadTile(i,j));
+				}
+			}
+		}
+	}
+	
+	public Tile loadTile(int x, int y){
+		//LOAD TILE FROM FILE IF EXISTS
+		return new Tile(x, y, terrainHeight(x, y), Biome.getBiome(x, y));
+	}
+
+	
+	//send all tiles to Save Handler to be properly saved to files
+	public ArrayList<Tile> UnLoadTiles(Player player) {
+		ArrayList<Tile> tilesToBeSaved = new ArrayList<Tile>();
+
+		for (int i = 0; i < tiles.size(); i++) {
+			if (tiles.get(i).getBoardX() - player.getBoardX() > LOAD_SIZE) {
+				tilesToBeSaved.add(tiles.remove(i));
+			} else if (tiles.get(i).getBoardX() - player.getBoardX() > LOAD_SIZE) {
+				tilesToBeSaved.add(tiles.remove(i));
+			}
+		}
+		return tilesToBeSaved;
 	}
 
 }

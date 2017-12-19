@@ -40,6 +40,8 @@ public class GameWindow extends JPanel {
 	public static double rotation = 0;
 
 	public static Player player;
+	private static int oldX;
+	private static int oldY;
 
 	public static int Tab = 0;
 	
@@ -85,6 +87,10 @@ public class GameWindow extends JPanel {
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
 
+		
+		oldX = player.getBoardX();
+		oldY = player.getBoardY();
+		
 		long t = System.currentTimeMillis();
 		long dt = 0;
 		while (true) {
@@ -94,6 +100,11 @@ public class GameWindow extends JPanel {
 				entityHandler.tick(tileHandler);
 				t = System.currentTimeMillis();
 				spawnHandler.spawnEntities(entityHandler, player);
+				
+				if(player.getBoardX() != oldX || player.getAbsY() != oldY){
+					oldX = player.getBoardX();
+					oldY = player.getBoardY();
+				}
 			}
 
 		}
