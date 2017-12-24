@@ -18,5 +18,12 @@ public abstract class StationaryEntity extends Entity {
 
 	public abstract void draw(GameWindow w,Graphics2D g, Tile t, Player player, double rotation, double height);
 	
-
+	
+	//public abstract void displayInfoText();
+	// use event handler to make text pop up on screen
+	
+	
+	public void interactPlayer(Player player) {
+		this.HP.increment(-1 * player.A.getVal());
+	}
 }

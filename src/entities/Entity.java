@@ -44,9 +44,14 @@ public abstract class Entity implements Serializable {
 		textureY = y;
 		texture = new Image[x.length];
 		updateTexture();
+		HP = new DoubleStat(10, 10); // TODO put these in each entity as a
+										// required setup method
+		A = new DoubleStat(1, 1);
+		D = new DoubleStat(1, 1);
 	}
 
 	public void updateTexture() {
+		texture = new Image[textureX.length];
 		for (int i = 0; i < textureX.length; i++) {
 			texture[i] = SpriteSheetLoader.getTexture(textureX[i], textureY[i]);
 		}
@@ -55,6 +60,9 @@ public abstract class Entity implements Serializable {
 	public abstract void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height);
 
 	public abstract void tick(EntityHandler e);
+
+	public abstract void interactPlayer(Player p); // perform action with
+													// player/to self
 
 	public double getAbsX() {
 		return absX;
@@ -78,7 +86,6 @@ public abstract class Entity implements Serializable {
 
 	public void setHP(double hP) {
 		HP.set(hP);
-		;
 	}
 
 	protected static double getX(double x, double y, double r, double Width) {

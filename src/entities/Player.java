@@ -14,6 +14,7 @@ import terrain.TileHandler;
 public class Player extends MovingEntity {
 
 	public static final double speed = 2;
+	public static final double interactDistance = 200;
 	public Inventory inventory;
 
 	public Player(int X, int Y, int[] x, int[] y) {

@@ -27,8 +27,6 @@ import processing.core.PApplet;
 
 public class TileHandler {
 
-	public static final int GRID_SIZE = 50;
-
 	// will be referred to as action border
 	// area where all tiles are loaded
 	public static final int LOAD_SIZE = 2;// 2
@@ -38,7 +36,7 @@ public class TileHandler {
 	public TileHandler(double seed, EntityHandler e) {
 		tiles = new ArrayList<Tile>();
 
-		seed = 100;
+		seed = seed;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -74,7 +72,7 @@ public class TileHandler {
 	public static double terrainHeight(int x, int y) {
 		Random rand = new Random(GameWindow.SEED + 1398 * x + 1412 * y);
 
-		return 50 * rand.nextInt(5);
+		return 50 * rand.nextInt(3) + 10;
 		// return 0;
 	}
 
@@ -129,39 +127,27 @@ public class TileHandler {
 		return r;
 	}
 
-	
-	//load tiles when players location changes
-	public void LoadTiles(Player player) {
-		for (int i = -LOAD_SIZE + player.getBoardX(); i < LOAD_SIZE + player.getBoardX(); i++) {
-			for (int j = -LOAD_SIZE + player.getBoardY(); j < LOAD_SIZE + player.getBoardY(); j++) {
-				boolean foundTile = false;
-				for (int t = 0; t < tiles.size(); t++) {
-					if(tiles.get(t).getBoardX() == i && tiles.get(t).getBoardY() == j){
-						foundTile = true;
-						break;
-					}
-				}
-				if(!foundTile){
-					tiles.add(loadTile(i,j));
-				}
+	public boolean missingTile(int x, int y) {
+		for (int i = 0; i < tiles.size(); i++) {
+			if (tiles.get(i).getBoardX() == x && tiles.get(i).getBoardY() == y) {
+				return false;
 			}
 		}
-	}
-	
-	public Tile loadTile(int x, int y){
-		//LOAD TILE FROM FILE IF EXISTS
-		return new Tile(x, y, terrainHeight(x, y), Biome.getBiome(x, y));
+		return true;
 	}
 
-	
-	//send all tiles to Save Handler to be properly saved to files
+	public void addTilefromSave(Tile t) {
+		tiles.add(t);
+	}
+
+	// send all tiles to Save Handler to be properly saved to files
 	public ArrayList<Tile> UnLoadTiles(Player player) {
+
 		ArrayList<Tile> tilesToBeSaved = new ArrayList<Tile>();
 
 		for (int i = 0; i < tiles.size(); i++) {
-			if (tiles.get(i).getBoardX() - player.getBoardX() > LOAD_SIZE) {
-				tilesToBeSaved.add(tiles.remove(i));
-			} else if (tiles.get(i).getBoardX() - player.getBoardX() > LOAD_SIZE) {
+			if (Math.abs(tiles.get(i).getBoardX() - player.getBoardX()) > LOAD_SIZE
+					|| Math.abs(tiles.get(i).getBoardY() - player.getBoardY()) > LOAD_SIZE) {
 				tilesToBeSaved.add(tiles.remove(i));
 			}
 		}

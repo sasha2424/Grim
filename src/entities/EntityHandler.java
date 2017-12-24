@@ -24,8 +24,14 @@ public class EntityHandler {
 	}
 
 	public void tick(TileHandler t) {
-		for (Entity e : entities) {
-			e.tick(this);
+		if (entities != null) {
+			for (int i = 0; i < entities.size(); i++) {
+				if (entities.get(i).HP.getVal() > 0) {
+					entities.get(i).tick(this);
+				} else {
+					entities.remove(entities.get(i));
+				}
+			}
 		}
 	}
 
@@ -35,8 +41,8 @@ public class EntityHandler {
 		double dy = a.getAbsY() - b.getAbsY();
 
 		if (b instanceof Player) {
-			dx -= b.getWidth()/2;
-			dy -= b.getWidth()/2;
+			dx -= b.getWidth() / 2;
+			dy -= b.getWidth() / 2;
 		}
 		double angle = Math.atan(dy / dx);
 		if (dx < 0)
@@ -52,6 +58,19 @@ public class EntityHandler {
 		if (e != null) {
 			for (Entity a : e) {
 				entities.add(a);
+			}
+		}
+	}
+
+	public void playerInteract(Player player, double r) {
+		for (Entity e : entities) {
+			if (e != player && dist(e, player) <= Player.interactDistance) {
+				double a = angle(e, player);
+				if (angleDist(a, r) < Math.PI / 8) {
+					System.out.println(
+							a / Math.PI * 180 + "\t" + r / Math.PI * 180 + "\t" + angleDist(a, r) / Math.PI * 180);
+					e.interactPlayer(player);
+				}
 			}
 		}
 	}
@@ -126,48 +145,22 @@ public class EntityHandler {
 		return Math.sqrt(dx + dy);
 	}
 
+	private double angle(Entity e1, Entity e2) {
+		double dx = e1.getAbsX() - e2.getAbsX();
+		double dy = e1.getAbsY() - e2.getAbsY();
+		double r = Math.atan2(dx, dy);
+		r += Math.PI;
+		return r;
+	}
+
+	private double angleDist(double a, double b) {
+		double d = Math.abs(b - a);
+		double distance = d > Math.PI ? Math.PI * 2 - d : d;
+		return distance;
+	}
+
 	public int getEntityCount() {
 		return entities.size();
-	}
-
-	public void saveEntities(ArrayList<Entity> entitiesToSave) {
-		try {
-			FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
-			ObjectOutputStream o = new ObjectOutputStream(f);
-
-			// Write objects to file
-			o.writeObject(entitiesToSave);
-
-			o.close();
-			f.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@SuppressWarnings("unchecked")
-	public ArrayList<Entity> loadEntities(Tile t) {
-
-		try {
-			FileInputStream fi = new FileInputStream(new File("myObjects.txt"));
-			ObjectInputStream oi = new ObjectInputStream(fi);
-
-			ArrayList<Entity> entities = (ArrayList<Entity>) oi.readObject();
-
-			oi.close();
-			fi.close();
-			return entities;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 }

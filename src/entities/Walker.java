@@ -14,7 +14,7 @@ public class Walker extends MovingEntity {
 		super(X, Y, new int[] { 0 }, new int[] { 1 });
 		speed = new DoubleStat(10, 10);
 		name = "walker";
-
+		HP = new DoubleStat(20,20);
 	}
 
 	@Override

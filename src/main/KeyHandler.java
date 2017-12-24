@@ -27,6 +27,9 @@ public class KeyHandler implements KeyListener {
 		if (k.getKeyCode() == KeyEvent.VK_W) {
 			keys[0] = true;
 		}
+		if (k.getKeyCode() == KeyEvent.VK_SPACE) {
+			keys[5] = true;
+		}
 		if (k.getKeyCode() == KeyEvent.VK_E) {
 			keys[4] = !keys[4];
 		}
@@ -36,6 +39,9 @@ public class KeyHandler implements KeyListener {
 	public void keyReleased(KeyEvent k) {
 		if (k.getKeyCode() == KeyEvent.VK_W) {
 			keys[0] = false;
+		}
+		if (k.getKeyCode() == KeyEvent.VK_SPACE) {
+			keys[5] = false;
 		}
 	}
 

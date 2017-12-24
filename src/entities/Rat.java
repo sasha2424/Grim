@@ -19,6 +19,7 @@ public class Rat extends MovingEntity {
 		angleCounter = 0;
 		angleV = .02;
 		name = "walker";
+		HP = new DoubleStat(10, 10);
 	}
 
 	@Override
@@ -43,8 +44,7 @@ public class Rat extends MovingEntity {
 
 		g.rotate(-angle - rotation + Math.PI / 2);
 		g.translate(-x, -y - height);
-		
-		
+
 		// g.drawImage(texture, (int) (x - k / 2), (int) (y - k / 2 + height),
 		// k, k, null);
 
@@ -62,8 +62,13 @@ public class Rat extends MovingEntity {
 			double dx = nearest.getAbsX() - this.getAbsX();
 			double dy = nearest.getAbsY() - this.getAbsY();
 			double d = Math.sqrt(dx * dx + dy * dy);
-			velX = dx / d;
-			velY = dy / d;
+
+			velX = 5 * dx / d;
+			velY = 5 * dy / d;
+			if (d < 300) {
+				velX = 0;
+				velY = 0;
+			}
 		}
 		super.move();
 	}
