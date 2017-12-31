@@ -21,7 +21,7 @@ public class Rat extends MovingEntity {
 
 	public Rat(double X, double Y) {
 		super(X, Y, new int[] { 5, 6 }, new int[] { 0, 0 });
-		speed = new DoubleStat(10, 10);
+		speed = new DoubleStat(3, 3);
 		angleCounter = 0;
 		angleV = .02;
 		name = "walker";
@@ -71,8 +71,8 @@ public class Rat extends MovingEntity {
 				double dy = nearest.getAbsY() - this.getAbsY();
 				double d = Math.sqrt(dx * dx + dy * dy);
 
-				velX = 3 * dx / d;
-				velY = 3 * dy / d;
+				velX = this.speed.getVal() * dx / d;
+				velY = this.speed.getVal() * dy / d;
 				if (d < 50) {
 					velX = 0;
 					velY = 0;

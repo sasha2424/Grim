@@ -36,8 +36,12 @@ public class Walker extends MovingEntity {
 			double dx = nearest.getAbsX() - this.getAbsX();
 			double dy = nearest.getAbsY() - this.getAbsY();
 			double d = Math.sqrt(dx * dx + dy * dy);
-			velX = dx / d;
-			velY = dy / d;
+			velX = this.speed.getVal() * dx / d;
+			velY = this.speed.getVal() * dy / d;
+			if (d < 50) {
+				velX = 0;
+				velY = 0;
+			}
 		}
 		super.move();
 	}
