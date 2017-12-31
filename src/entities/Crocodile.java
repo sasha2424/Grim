@@ -11,21 +11,28 @@ import main.EventHandler;
 import main.GameWindow;
 import terrain.Tile;
 
-public class Rat extends MovingEntity {
+public class Crocodile extends MovingEntity {
 
+	// head and tail rotation
 	private double angleCounter;
-	private double angleV;
 	private double angleMax = Math.PI / 8;
+	private double angleV = .02;
+
+	private double feetShift;
+	private double feetShiftMax = 10;
+	private double shiftV = feetShiftMax / (angleMax / angleV); // sync with
+																// head
 
 	private int timer = 0;
 
-	public Rat(double X, double Y) {
-		super(X, Y, new int[] { 5, 6 }, new int[] { 0, 0 });
-		speed = new DoubleStat(3, 3);
+	public Crocodile(double X, double Y) {
+		super(X, Y, new int[] { 7, 8, 9, 7, 8 }, new int[] { 0, 0, 0, 1, 1 });
+		// head,body,tail
+		// left feet,right feet
+		speed = new DoubleStat(2, 2);
 		angleCounter = 0;
-		angleV = .02;
-		name = "rat";
-		HP = new DoubleStat(10, 10);
+		name = "crocodile";
+		HP = new DoubleStat(30, 30);
 	}
 
 	@Override
@@ -42,22 +49,44 @@ public class Rat extends MovingEntity {
 		g.translate(x, y + height);
 		g.rotate(angle + rotation - Math.PI / 2);
 
-		g.drawImage(texture[0], -k / 2, -k / 2, k, k, null);
-
-		g.rotate(angleCounter);
-		g.drawImage(texture[1], -k / 2, +k / 2, k, k, null);
+		// head
 		g.rotate(-angleCounter);
+		g.drawImage(texture[0], -k / 2, -3 * k / 2, k, k, null);
+		g.rotate(angleCounter);
+
+		// body
+		g.drawImage(texture[1], -k / 2, -k / 2, k, k, null);
+
+		// left feet
+		g.drawImage(texture[3], -3 * k / 2, (int) (-k / 2 + feetShift), k, k, null);
+
+		// right feet
+		g.drawImage(texture[4], k / 2, (int) (-k / 2 - feetShift), k, k, null);
+
+		// tail
+		if (shouldMove) {
+			g.rotate(angleCounter);
+		}
+		g.drawImage(texture[2], -k / 2, k / 2, k, k, null);
+		if (shouldMove) {
+			g.rotate(-angleCounter);
+		}
 
 		g.rotate(-angle - rotation + Math.PI / 2);
 		g.translate(-x, -y - height);
-
-		// g.drawImage(texture, (int) (x - k / 2), (int) (y - k / 2 + height),
-		// k, k, null);
 
 		// move tail
 		angleCounter += angleV;
 		if (angleCounter > angleMax || angleCounter < -angleMax) {
 			angleV = -angleV;
+		}
+
+		if (shouldMove) {
+			// move tail
+			feetShift += shiftV;
+			if (feetShift > feetShiftMax || feetShift < -feetShiftMax) {
+				shiftV = -shiftV;
+			}
 		}
 	}
 
@@ -82,7 +111,7 @@ public class Rat extends MovingEntity {
 	}
 
 	public void deathEvent(EntityHandler e, Player player) {
-		if (Math.random() < .2)
+		if (Math.random() < .8)
 			player.inventory.addItem(new Bread());
 	}
 

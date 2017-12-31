@@ -84,7 +84,7 @@ public abstract class Entity implements Serializable {
 
 	public abstract void tick(EntityHandler e);
 
-	public abstract void interactPlayer(Player p);
+	public abstract void interactPlayer(EntityHandler e, Player p);
 	// perform action with player/to self
 
 	public abstract void deathEvent(EntityHandler e, Player p);

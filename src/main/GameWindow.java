@@ -26,8 +26,8 @@ public class GameWindow extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static final double WIDTH = 800;
 	private static final double HEIGHT = 800;
-	// public static final long SEED = (long) (Math.random() * 10);
-	public static final long SEED = 5;
+	public static final long SEED = (long) (Math.random() * 10);
+	//public static final long SEED = 5;
 	public static Point mouse;
 
 	public static TileHandler tileHandler;
@@ -59,15 +59,8 @@ public class GameWindow extends JPanel {
 
 		entityHandler.addEntity(player);
 
-		entityHandler.addEntity(new Rat(400, 400));
-		entityHandler.addEntity(new Rat(400, 500));
-		entityHandler.addEntity(new Rat(450, 4050));
-		entityHandler.addEntity(new Rat(500, 400));
-		entityHandler.addEntity(new Rat(900, 900));
-		entityHandler.addEntity(new Rat(450, 400));
-		entityHandler.addEntity(new Rat(400, 900));
-		entityHandler.addEntity(new Rat(600, 600));
-		entityHandler.addEntity(new Rat(400, 900));
+		entityHandler.addEntity(new Crocodile(400, 400));
+		
 
 		// for (int i = 0; i < 5; i++) {
 		// entityHandler.addEntity(new Tree(Math.random() * 200, Math.random() *

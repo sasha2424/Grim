@@ -19,8 +19,9 @@ import terrain.TileHandler;
 public class SaveHandler {
 	private int oldX;
 	private int oldY;
-	
-	private static final int BUFFER = 2; // buffer around load size for when to reload tiles
+
+	private static final int BUFFER = 2; // buffer around load size for when to
+											// reload tiles
 
 	public SaveHandler() {
 		oldX = 1000;
@@ -75,7 +76,8 @@ public class SaveHandler {
 		}
 
 		Tile t = new Tile(x, y, TileHandler.terrainHeight(x, y), Biome.getBiome(x, y));
-		p = new SavePacket(t, null);
+		ArrayList<Entity> e = TileHandler.generateEntitiesForTile(t);
+		p = new SavePacket(t, e);
 		return p;
 	}
 

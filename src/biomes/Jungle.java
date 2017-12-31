@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import entities.Crocodile;
 import entities.Entity;
 import entities.Player;
 import entities.Walker;
@@ -38,7 +39,7 @@ public class Jungle extends Biome{
 
 		double x = Math.random() * Tile.TILE_SIZE + t.getAbsX();
 		double y = Math.random() * Tile.TILE_SIZE + t.getAbsY();
-		spawn.add(new Walker(x, y));
+		spawn.add(new Crocodile(x, y));
 
 		return spawn;
 	}

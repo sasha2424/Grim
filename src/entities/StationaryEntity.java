@@ -27,7 +27,7 @@ public abstract class StationaryEntity extends Entity {
 	// public abstract void displayInfoText();
 	// use event handler to make text pop up on screen
 
-	public void interactPlayer(Player player) {
+	public void interactPlayer(EntityHandler e, Player player) {
 		this.HP.increment(-1 * player.A.getVal());
 	}
 
