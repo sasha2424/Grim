@@ -25,8 +25,8 @@ public class SpriteSheetLoader {
 
 	}
 
-	public static Image getTexture(int r, int c) { // row column
-		return Entities.getSubimage(c * SPRITE_SIZE, r * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE);
+	public static Image getTexture(int x, int y) { // row column
+		return Entities.getSubimage(x * SPRITE_SIZE, y * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE);
 	}
 
 }

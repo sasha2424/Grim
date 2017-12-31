@@ -1,15 +1,15 @@
 package entities;
 
 import java.awt.Graphics;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.Serializable;
 
 import main.DoubleStat;
+import main.EventHandler;
 import main.GameWindow;
 import main.SpriteSheetLoader;
-import processing.core.PApplet;
-import processing.core.PImage;
 import terrain.Tile;
 
 public abstract class Entity implements Serializable {
@@ -28,6 +28,7 @@ public abstract class Entity implements Serializable {
 	protected DoubleStat HP;
 	protected DoubleStat A;
 	protected DoubleStat D;
+	protected boolean hasDied;
 	// TODO add and Clothes Set to this ( class which keeps track of clothes
 	// equiped and each ones"thickness)
 
@@ -44,10 +45,13 @@ public abstract class Entity implements Serializable {
 		textureY = y;
 		texture = new Image[x.length];
 		updateTexture();
-		HP = new DoubleStat(10, 10); // TODO put these in each entity as a
-										// required setup method
+
+		// TODO put these in each entity as a required setup method
+		HP = new DoubleStat(10, 10);
 		A = new DoubleStat(1, 1);
 		D = new DoubleStat(1, 1);
+
+		hasDied = false;
 	}
 
 	public void updateTexture() {
@@ -57,12 +61,33 @@ public abstract class Entity implements Serializable {
 		}
 	}
 
+	/***
+	 * Use only if texture is specifically added after the super constructor is
+	 * run
+	 * 
+	 * @param X
+	 * @param Y
+	 */
+	public Entity(double X, double Y) {
+		this.absX = X;
+		this.absY = Y;
+
+		// TODO put these in each entity as a required setup method
+		HP = new DoubleStat(10, 10);
+		A = new DoubleStat(1, 1);
+		D = new DoubleStat(1, 1);
+
+		hasDied = false;
+	}
+
 	public abstract void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height);
 
 	public abstract void tick(EntityHandler e);
 
-	public abstract void interactPlayer(Player p); // perform action with
-													// player/to self
+	public abstract void interactPlayer(Player p);
+	// perform action with player/to self
+
+	public abstract void deathEvent(EntityHandler e, Player p);
 
 	public double getAbsX() {
 		return absX;
@@ -102,6 +127,10 @@ public abstract class Entity implements Serializable {
 
 	public double getWidth() {
 		return width;
+	}
+
+	public boolean isDead() {
+		return hasDied;
 	}
 
 }

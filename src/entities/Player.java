@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import main.EventHandler;
 import main.GameWindow;
 import main.KeyHandler;
 import player.Inventory;
@@ -13,8 +14,10 @@ import terrain.TileHandler;
 
 public class Player extends MovingEntity {
 
-	public static final double speed = 2;
-	public static final double interactDistance = 200;
+	public static final double speed = 4;
+	public static final double interactDistance = 80;
+	public static final int attackDelay = 10;
+	private int attackTickCount = 0;
 	public Inventory inventory;
 
 	public Player(int X, int Y, int[] x, int[] y) {
@@ -22,6 +25,14 @@ public class Player extends MovingEntity {
 		this.name = "player";
 		width = 30;
 		inventory = new Inventory();
+	}
+
+	public boolean canAttack() {
+		return attackTickCount > attackDelay;
+	}
+
+	public void resetAttackCounter() {
+		attackTickCount = 0;
 	}
 
 	public double getX() {
@@ -48,8 +59,13 @@ public class Player extends MovingEntity {
 		this.absY = y;
 	}
 
-	public void draw(GameWindow w,Graphics2D g, Tile t, Player player, double rotation, double height) {
-		g.drawImage(texture[0], (int) (w.getCurrentWidth() / 2 - width / 2), (int) (w.getCurrentHeight() / 2 - width / 2), (int)width, (int)width, null);
+	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
+		g.drawImage(texture[0], (int) (w.getCurrentWidth() / 2 - width / 2),
+				(int) (w.getCurrentHeight() / 2 - width / 2), (int) width, (int) width, null);
+		if (attackTickCount == 0) {
+			g.drawRect((int) (w.getCurrentWidth() / 2 - width / 2), (int) (w.getCurrentHeight() / 2 - width / 2), 30,
+					(int) (-1 * interactDistance));
+		}
 
 	}
 
@@ -68,6 +84,7 @@ public class Player extends MovingEntity {
 
 	@Override
 	public void tick(EntityHandler e) {
+		attackTickCount++;
 		// TODO stuff like burns and poison and effects
 
 	}
@@ -77,4 +94,7 @@ public class Player extends MovingEntity {
 		return r;
 	}
 
+	public void deathEvent(EntityHandler e, Player player) {
+		// TODO clear inventory
+	}
 }

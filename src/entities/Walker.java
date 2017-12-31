@@ -5,16 +5,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 import main.DoubleStat;
+import main.EventHandler;
 import main.GameWindow;
 import terrain.Tile;
 
 public class Walker extends MovingEntity {
 
 	public Walker(double X, double Y) {
-		super(X, Y, new int[] { 0 }, new int[] { 1 });
+		super(X, Y, new int[] { 1 }, new int[] { 0 });
 		speed = new DoubleStat(10, 10);
 		name = "walker";
-		HP = new DoubleStat(20,20);
+		HP = new DoubleStat(20, 20);
 	}
 
 	@Override
@@ -39,6 +40,20 @@ public class Walker extends MovingEntity {
 			velY = dy / d;
 		}
 		super.move();
+	}
+
+	public void deathEvent(Player player, EventHandler eventHandler) {
+		// TODO fix
+	}
+
+	public void deathEvent(EntityHandler e, Player p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void runGraphic(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

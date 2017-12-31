@@ -23,12 +23,13 @@ public class EntityHandler {
 		entities = new ArrayList<Entity>();
 	}
 
-	public void tick(TileHandler t) {
+	public void tick(TileHandler t,Player p) {
 		if (entities != null) {
 			for (int i = 0; i < entities.size(); i++) {
-				if (entities.get(i).HP.getVal() > 0) {
+				if (!entities.get(i).isDead()) {
 					entities.get(i).tick(this);
 				} else {
+					entities.get(i).deathEvent(this,p);
 					entities.remove(entities.get(i));
 				}
 			}
@@ -67,8 +68,6 @@ public class EntityHandler {
 			if (e != player && dist(e, player) <= Player.interactDistance) {
 				double a = angle(e, player);
 				if (angleDist(a, r) < Math.PI / 8) {
-					System.out.println(
-							a / Math.PI * 180 + "\t" + r / Math.PI * 180 + "\t" + angleDist(a, r) / Math.PI * 180);
 					e.interactPlayer(player);
 				}
 			}

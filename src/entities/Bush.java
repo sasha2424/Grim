@@ -10,7 +10,7 @@ import terrain.Tile;
 public class Bush extends StationaryEntity {
 
 	public Bush(double X, double Y) {
-		super(X, Y, new int[]{0}, new int[]{2});
+		super(X, Y, new int[]{2}, new int[]{0});
 		name = "bush";
 	}
 

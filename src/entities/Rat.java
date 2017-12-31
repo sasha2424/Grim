@@ -2,8 +2,12 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
+import items.Bread;
 import main.DoubleStat;
+import main.EventHandler;
 import main.GameWindow;
 import terrain.Tile;
 
@@ -13,8 +17,10 @@ public class Rat extends MovingEntity {
 	private double angleV;
 	private double angleMax = Math.PI / 8;
 
+	private int timer = 0;
+
 	public Rat(double X, double Y) {
-		super(X, Y, new int[] { 0, 0 }, new int[] { 5, 6 });
+		super(X, Y, new int[] { 5, 6 }, new int[] { 0, 0 });
 		speed = new DoubleStat(10, 10);
 		angleCounter = 0;
 		angleV = .02;
@@ -57,20 +63,47 @@ public class Rat extends MovingEntity {
 
 	@Override
 	public void tick(EntityHandler e) {
-		Entity nearest = e.getNearestEntity(this, "player");
-		if (nearest != null) {
-			double dx = nearest.getAbsX() - this.getAbsX();
-			double dy = nearest.getAbsY() - this.getAbsY();
-			double d = Math.sqrt(dx * dx + dy * dy);
+		if (HP.getVal() > 2) {
 
-			velX = 5 * dx / d;
-			velY = 5 * dy / d;
-			if (d < 300) {
-				velX = 0;
-				velY = 0;
+			Entity nearest = e.getNearestEntity(this, "player");
+			if (nearest != null) {
+				double dx = nearest.getAbsX() - this.getAbsX();
+				double dy = nearest.getAbsY() - this.getAbsY();
+				double d = Math.sqrt(dx * dx + dy * dy);
+
+				velX = 3 * dx / d;
+				velY = 3 * dy / d;
+				if (d < 50) {
+					velX = 0;
+					velY = 0;
+				}
 			}
+			super.move();
+		} else if (HP.getVal() > 0) {
+			if (timer == 10) {
+				e.addEntity(new Particle(this.getAbsX(), this.getAbsY(), 0, 10));
+				timer = 0;
+			}
+			timer++;
+		} else {
+			this.hasDied = true;
 		}
-		super.move();
+	}
+
+	public void deathEvent(EntityHandler e, Player player) {
+		if (Math.random() < .2)
+			player.inventory.addItem(new Bread());
+	}
+
+	public void runGraphic(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
+		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
+		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
+		g.translate(x, y + height);
+		double radius = 20;
+		Shape circle = new Ellipse2D.Double(0 - radius, 0 - radius, 2.0 * radius, 2.0 * radius);
+		g.draw(circle);
+		g.translate(-x, -y - height);
+
 	}
 
 }
