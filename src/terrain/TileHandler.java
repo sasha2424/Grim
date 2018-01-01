@@ -46,37 +46,38 @@ public class TileHandler {
 		}
 	}
 
-//	public void updateTiles(EntityHandler e, Player player) {
-//		// TODO make more effective
-//		tiles.clear();
-//
-//		int x = player.getBoardX();
-//		int y = player.getBoardY();
-//
-//		// create new tiles
-//		for (int i = -LOAD_SIZE + x; i < LOAD_SIZE + x; i++) {
-//			for (int j = -LOAD_SIZE + y; j < LOAD_SIZE + y; j++) {
-//				if (getTile(i, j) == null) {
-//					Tile t = new Tile(i, j, terrainHeight(i, j), Biome.getBiome(i, j));
-//					tiles.add(t);
-//				}
-//			}
-//		}
-//
-//		// TODO update spawn in the players tile + small range
-//
-//	}
+	// public void updateTiles(EntityHandler e, Player player) {
+	// // TODO make more effective
+	// tiles.clear();
+	//
+	// int x = player.getBoardX();
+	// int y = player.getBoardY();
+	//
+	// // create new tiles
+	// for (int i = -LOAD_SIZE + x; i < LOAD_SIZE + x; i++) {
+	// for (int j = -LOAD_SIZE + y; j < LOAD_SIZE + y; j++) {
+	// if (getTile(i, j) == null) {
+	// Tile t = new Tile(i, j, terrainHeight(i, j), Biome.getBiome(i, j));
+	// tiles.add(t);
+	// }
+	// }
+	// }
+	//
+	// // TODO update spawn in the players tile + small range
+	//
+	// }
 
 	public static double terrainHeight(int x, int y) {
-		Random rand = new Random(GameWindow.SEED + 1398 * x + 1412 * y);
 
+		Random rand = new Random(GameWindow.SEED + 1398 * x + 1412 * y);
 		return 50 * rand.nextInt(3) + 10;
 		// return 0;
 	}
 
 	public static double[] getAdjacentTileHeights(int x, int y) {
 		double[] r = new double[4];
-		for (Tile t : tiles) {
+		for (int i = 0; i < tiles.size(); i++) {
+			Tile t = tiles.get(i);
 			if (t.getBoardX() == x && t.getBoardY() == y - 1) {
 				r[0] = t.getH();
 			}
@@ -153,7 +154,7 @@ public class TileHandler {
 	}
 
 	public static ArrayList<Entity> generateEntitiesForTile(Tile t) {
-		Biome.getBiome(t.getBoardX(),t.getBoardY());
+		Biome.getBiome(t.getBoardX(), t.getBoardY());
 		return null;
 	}
 

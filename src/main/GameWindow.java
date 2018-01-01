@@ -7,6 +7,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -26,8 +34,8 @@ public class GameWindow extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static final double WIDTH = 800;
 	private static final double HEIGHT = 800;
-	public static final long SEED = (long) (Math.random() * 10);
-	//public static final long SEED = 5;
+	public static long SEED;
+	// public static final long SEED = 5;
 	public static Point mouse;
 
 	public static TileHandler tileHandler;
@@ -59,9 +67,6 @@ public class GameWindow extends JPanel {
 
 		entityHandler.addEntity(player);
 
-		entityHandler.addEntity(new Crocodile(400, 400));
-		
-
 		// for (int i = 0; i < 5; i++) {
 		// entityHandler.addEntity(new Tree(Math.random() * 200, Math.random() *
 		// 200));
@@ -85,6 +90,10 @@ public class GameWindow extends JPanel {
 
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
+
+		SEED = getSeed(); // TODO load seed from save
+
+		System.out.println("Seed: " + SEED);
 
 		long t = System.currentTimeMillis();
 		long dt = 0;
@@ -133,8 +142,6 @@ public class GameWindow extends JPanel {
 
 		if (Tab == 0) { // in game
 
-			// only update, do spawn, and render when in game
-			// tileHandler.updateTiles(entityHandler, player);
 			saveHandler.updateLoadedTiles(tileHandler, entityHandler, player);
 			tileHandler.renderAll(this, g2d, entityHandler, rotation, player);
 			g2d.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
@@ -160,6 +167,48 @@ public class GameWindow extends JPanel {
 
 	public double getCurrentHeight() {
 		return (double) this.getSize().getHeight();
+	}
+
+	private static long getSeed() {
+
+		String saveDataFile = "./Save/save.txt";
+
+		File f = new File(saveDataFile);
+		if (f.exists() && !f.isDirectory()) {
+			// GET SEED FROM EXISTING FILE
+			try {
+				String text = "";
+				BufferedReader br = new BufferedReader(new FileReader(saveDataFile));
+				String line = br.readLine();
+				while (line != null) {
+					text = text + line + "\n";
+					line = br.readLine();
+				}
+				br.close();
+				Long s = Long.parseLong(text.split("\n")[0]);
+				return s;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} else {
+			// CREATE FILE AND ADD SEED TO FILE
+			Long S = (long) (Math.random() * 10);
+			PrintWriter writer;
+			try {
+				writer = new PrintWriter(saveDataFile);
+				writer.println("" + (S));
+				writer.close();
+				return S;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return 0; // seed if file save failed.
+
 	}
 
 }

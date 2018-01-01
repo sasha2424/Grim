@@ -8,14 +8,15 @@ public class KeyHandler implements KeyListener {
 
 	public KeyHandler() {
 		super();
-		keys = new Boolean[7];
+		keys = new Boolean[8];
 		keys[0] = false; // move forward w
 		keys[1] = false; // move left a
 		keys[2] = false; // move back s
 		keys[3] = false; // move right d
 		keys[4] = false; // inventory e
 		keys[5] = false; // interact " "
-		keys[6] = false; // off hand / special / spell / misc r
+		keys[6] = false; // special / spell / misc q
+		keys[7] = false; // quit and save esc
 	}
 
 	public boolean getKeyPressed(int i) {
@@ -32,6 +33,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (k.getKeyCode() == KeyEvent.VK_E) {
 			keys[4] = !keys[4];
+		}
+		if (k.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			keys[7] = !keys[7];
 		}
 	}
 

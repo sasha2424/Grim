@@ -14,7 +14,7 @@ import terrain.TileHandler;
 
 public class Player extends MovingEntity {
 
-	public static final double speed = 4;
+	public static final double speed = 10;
 	public static final double interactDistance = 80;
 	public static final int attackDelay = 10;
 	private int attackTickCount = 0;
