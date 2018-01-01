@@ -125,6 +125,11 @@ public class GameWindow extends JPanel {
 					player.resetAttackCounter();
 				}
 
+				if (keyHandler.getKeyPressed(7)) {
+					saveHandler.saveAll(tileHandler, entityHandler, player);
+					System.exit(ABORT);
+				}
+
 				// ******************
 			}
 
@@ -141,13 +146,14 @@ public class GameWindow extends JPanel {
 		g2d.setColor(Color.red);
 
 		if (Tab == 0) { // in game
+			if (!keyHandler.getKeyPressed(7)) {
+				// check for when game is closing
+				saveHandler.updateLoadedTiles(tileHandler, entityHandler, player);
+				tileHandler.renderAll(this, g2d, entityHandler, rotation, player);
+				g2d.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
 
-			saveHandler.updateLoadedTiles(tileHandler, entityHandler, player);
-			tileHandler.renderAll(this, g2d, entityHandler, rotation, player);
-			g2d.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
-
-			player.inventory.renderHandBar(this, g2d);
-
+				player.inventory.renderHandBar(this, g2d);
+			}
 		}
 		if (keyHandler.getKeyPressed(4)) { // inventory
 			Tab = 1;

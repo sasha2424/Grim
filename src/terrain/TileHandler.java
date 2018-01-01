@@ -153,9 +153,18 @@ public class TileHandler {
 		return tilesToBeSaved;
 	}
 
-	public static ArrayList<Entity> generateEntitiesForTile(Tile t) {
+	public static ArrayList<Entity> generateEntitiesForTile(Tile t) { // TODO
 		Biome.getBiome(t.getBoardX(), t.getBoardY());
 		return null;
+	}
+
+	public ArrayList<Tile> getAllTiles() {
+		ArrayList<Tile> r = new ArrayList<Tile>();
+		for (int i = 0; i < tiles.size(); i++) {
+			r.add(tiles.get(i));
+		}
+		tiles.clear();
+		return r;
 	}
 
 }

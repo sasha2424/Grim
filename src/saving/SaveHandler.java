@@ -59,6 +59,18 @@ public class SaveHandler {
 		}
 	}
 
+	public void saveAll(TileHandler tileHandler, EntityHandler entityHandler, Player player) {
+
+		ArrayList<Tile> toSave = tileHandler.getAllTiles();
+
+		for (Tile t : toSave) {
+			// TODO run saving as a separate thread to make the game faster
+			SavePacket p = new SavePacket(t, entityHandler.getEntitiesInTile(t));
+			save(p);
+		}
+
+	}
+
 	public SavePacket load(int x, int y) {
 		SavePacket p;
 
