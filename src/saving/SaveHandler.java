@@ -39,8 +39,8 @@ public class SaveHandler {
 				for (int j = Y - loadSize; j < Y + loadSize; j++) {
 					if (tileHandler.missingTile(i, j)) {
 						SavePacket p = load(i, j);
-						tileHandler.addTilefromSave(p.getTile()); // TODO finish
-																	// here
+
+						tileHandler.addTilefromSave(p.getTile());
 						entityHandler.addEntitiesFromSave(p.getEntities());
 					}
 				}
@@ -72,39 +72,38 @@ public class SaveHandler {
 	}
 
 	public SavePacket load(int x, int y) {
-		SavePacket p;
 
-		FileInputStream fis = null;
-		ObjectInputStream in = null;
 		try {
-			fis = new FileInputStream("./Save/(" + x + "," + y + ").txt");
-			in = new ObjectInputStream(fis);
-			p = (SavePacket) in.readObject();
+			FileInputStream fis = new FileInputStream("./Save/(" + x + "," + y + ").ser");
+			ObjectInputStream in = new ObjectInputStream(fis);
+			SavePacket p = (SavePacket) in.readObject();
+			System.out.println("4");
 			in.close();
+			fis.close();
 			return p;
 		} catch (FileNotFoundException ex) {
 		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {
 		}
 
+		System.out.println("load failed");
+		Biome b = Biome.getBiome(x, y);
 		Tile t = new Tile(x, y, TileHandler.terrainHeight(x, y), Biome.getBiome(x, y));
-		ArrayList<Entity> e = TileHandler.generateEntitiesForTile(t);
-		p = new SavePacket(t, e);
-		return p;
+		ArrayList<Entity> e = b.generateEntitiesForTile(t);
+		return new SavePacket(t, e);
 	}
 
 	public void save(SavePacket p) {
 
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
 		try {
-			File save = new File("./Save/(" + p.getName() + ").txt");
-			save.createNewFile(); // if file already exists will do nothing
-			fos = new FileOutputStream(save, false);
-			out = new ObjectOutputStream(fos);
+			String save = "./Save/" + p.getName() + ".ser";
+	
+			FileOutputStream fos = new FileOutputStream(save);
+			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(p);
 
 			out.close();
+			fos.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

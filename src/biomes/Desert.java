@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import entities.Entity;
 import entities.Player;
 import entities.Rat;
+import entities.Rock;
 import entities.Walker;
 import main.SpriteSheetLoader;
 import terrain.Tile;
@@ -47,6 +48,22 @@ public class Desert extends Biome {
 			return spawn;
 		}
 		return null;
+	}
+
+	@Override
+	public ArrayList<Entity> generateEntitiesForTile(Tile t) {
+		ArrayList<Entity> r = new ArrayList<Entity>();
+
+		for (int i = 0; i < 5; i++) {
+			double x = Math.random() * (Tile.TILE_SIZE - 70) + t.getAbsX();
+			double y = Math.random() * (Tile.TILE_SIZE - 70) + t.getAbsY();
+			r.add(new Rock(x, y));
+			if (Math.random() < .5)
+				r.add(new Rock(x + Math.random() * 70, y + Math.random() * 70));
+			if (Math.random() < .2)
+				r.add(new Rock(x + Math.random() * 70, y + Math.random() * 70));
+		}
+		return r;
 	}
 
 }

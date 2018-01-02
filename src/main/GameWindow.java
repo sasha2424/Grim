@@ -53,8 +53,8 @@ public class GameWindow extends JPanel {
 
 	// TODO
 	/*
-	 * add width to all entities make tiles render with graphics give rat actual
-	 * texture
+	 * add width to all entities
+	 * save player when saving and loading on exit and startup
 	 * 
 	 */
 

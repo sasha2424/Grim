@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import entities.Bush;
 import entities.Entity;
+import entities.Grass;
 import entities.Player;
+import entities.Tree;
 import entities.Walker;
 import main.SpriteSheetLoader;
 import terrain.Tile;
@@ -44,6 +47,22 @@ public class Plain extends Biome {
 			return spawn;
 		}
 		return null;
+	}
+
+	@Override
+	public ArrayList<Entity> generateEntitiesForTile(Tile t) {
+		ArrayList<Entity> r = new ArrayList<Entity>();
+
+		for (int i = 0; i < 5; i++) {
+			double x = Math.random() * (Tile.TILE_SIZE - 70) + t.getAbsX();
+			double y = Math.random() * (Tile.TILE_SIZE - 70) + t.getAbsY();
+			r.add(new Bush(x, y));
+			if (Math.random() < .5)
+				r.add(new Grass(x + Math.random() * 70, y + Math.random() * 70));
+			if (Math.random() < .2)
+				r.add(new Bush(x + Math.random() * 70, y + Math.random() * 70));
+		}
+		return r;
 	}
 
 }

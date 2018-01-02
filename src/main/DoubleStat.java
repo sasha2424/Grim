@@ -1,6 +1,8 @@
 package main;
 
-public class DoubleStat {
+import java.io.Serializable;
+
+public class DoubleStat implements Serializable{
 	private double val;
 	private double max;
 	private double boost; // TODO make a "Boost" class that hold a value and

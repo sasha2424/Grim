@@ -7,9 +7,9 @@ import entities.Entity;
 import terrain.Tile;
 
 public class SavePacket implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Tile t;
 	private ArrayList<Entity> entities;
 
@@ -17,16 +17,24 @@ public class SavePacket implements Serializable {
 		this.t = t;
 		this.entities = e;
 	}
-	
-	public String getName(){
-		return t.getBoardX() + ","+ t.getBoardY();
+
+	public String getName() {
+		return "(" + t.getBoardX() + "," + t.getBoardY() + ")";
 	}
-	
-	public Tile getTile(){
+
+	public Tile getTile() {
 		return t;
 	}
-	public ArrayList<Entity> getEntities(){
+
+	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+
+	public String getStats() {
+		String r = t.getAbsX() + "\t" + t.getAbsY() + "\n";
+		r += t.getBoardX() + "\t" + t.getBoardY() + "\n";
+		r += "Entity Count: " + entities.size() + "\n";
+		return r;
 	}
 
 }

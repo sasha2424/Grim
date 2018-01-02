@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import entities.Crocodile;
 import entities.Entity;
 import entities.Player;
+import entities.Tree;
 import entities.Walker;
 import main.SpriteSheetLoader;
 import terrain.Tile;
@@ -42,6 +43,22 @@ public class Jungle extends Biome{
 		spawn.add(new Crocodile(x, y));
 
 		return spawn;
+	}
+
+	@Override
+	public ArrayList<Entity> generateEntitiesForTile(Tile t) {
+		ArrayList<Entity> r = new ArrayList<Entity>();
+
+		for (int i = 0; i < 15; i++) {
+			double x = Math.random() * (Tile.TILE_SIZE - 70) + t.getAbsX();
+			double y = Math.random() * (Tile.TILE_SIZE - 70) + t.getAbsY();
+			r.add(new Tree(x, y));
+			if (Math.random() < .5)
+				r.add(new Tree(x + Math.random() * 70, y + Math.random() * 70));
+			if (Math.random() < .2)
+				r.add(new Tree(x + Math.random() * 70, y + Math.random() * 70));
+		}
+		return r;
 	}
 
 }
