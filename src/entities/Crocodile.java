@@ -14,7 +14,7 @@ import terrain.Tile;
 public class Crocodile extends MovingEntity {
 
 	// head and tail rotation
-	private double angleCounter;
+	private double angleCounter = 0;
 	private double angleMax = Math.PI / 8;
 	private double angleV = .02;
 
@@ -30,9 +30,12 @@ public class Crocodile extends MovingEntity {
 		// head,body,tail
 		// left feet,right feet
 		speed = new DoubleStat(2, 2);
-		angleCounter = 0;
-		name = "crocodile";
 		HP = new DoubleStat(30, 30);
+		name = "crocodile";
+		size = 30;
+		collisionRange = 50;
+		
+		
 	}
 
 	@Override
@@ -43,7 +46,6 @@ public class Crocodile extends MovingEntity {
 		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
 
 		// size of the entity
-		int k = 30;
 		double angle = EntityHandler.getAngle(this, player);
 
 		g.translate(x, y + height);
@@ -51,23 +53,23 @@ public class Crocodile extends MovingEntity {
 
 		// head
 		g.rotate(-angleCounter);
-		g.drawImage(texture[0], -k / 2, -3 * k / 2, k, k, null);
+		g.drawImage(texture[0], -size / 2, -3 * size / 2, size, size, null);
 		g.rotate(angleCounter);
 
 		// body
-		g.drawImage(texture[1], -k / 2, -k / 2, k, k, null);
+		g.drawImage(texture[1], -size / 2, -size / 2, size, size, null);
 
 		// left feet
-		g.drawImage(texture[3], -3 * k / 2, (int) (-k / 2 + feetShift), k, k, null);
+		g.drawImage(texture[3], -3 * size / 2, (int) (-size / 2 + feetShift), size, size, null);
 
 		// right feet
-		g.drawImage(texture[4], k / 2, (int) (-k / 2 - feetShift), k, k, null);
+		g.drawImage(texture[4], size / 2, (int) (-size / 2 - feetShift), size, size, null);
 
 		// tail
 		if (shouldMove) {
 			g.rotate(angleCounter);
 		}
-		g.drawImage(texture[2], -k / 2, k / 2, k, k, null);
+		g.drawImage(texture[2], -size / 2, size / 2, size, size, null);
 		if (shouldMove) {
 			g.rotate(-angleCounter);
 		}

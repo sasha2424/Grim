@@ -23,10 +23,13 @@ public class Rat extends MovingEntity {
 	public Rat(double X, double Y) {
 		super(X, Y, new int[] { 5, 6 }, new int[] { 0, 0 });
 		speed = new DoubleStat(3, 3);
+		HP = new DoubleStat(10, 10);
 		angleCounter = 0;
 		angleV = .02;
 		name = "rat";
-		HP = new DoubleStat(10, 10);
+		size = 30;
+		collisionRange = 30;
+		
 	}
 
 	@Override
@@ -36,17 +39,15 @@ public class Rat extends MovingEntity {
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
 		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
 
-		// size of the entity
-		int k = 30;
 		double angle = EntityHandler.getAngle(this, player);
 
 		g.translate(x, y + height);
 		g.rotate(angle + rotation - Math.PI / 2);
 
-		g.drawImage(texture[0], -k / 2, -k / 2, k, k, null);
+		g.drawImage(texture[0], -size / 2, -size / 2, size, size, null);
 
 		g.rotate(angleCounter);
-		g.drawImage(texture[1], -k / 2, +k / 2, k, k, null);
+		g.drawImage(texture[1], -size / 2, +size / 2, size, size, null);
 		g.rotate(-angleCounter);
 
 		g.rotate(-angle - rotation + Math.PI / 2);

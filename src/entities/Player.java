@@ -23,8 +23,9 @@ public class Player extends MovingEntity {
 	public Player(int X, int Y, int[] x, int[] y) {
 		super(X, Y, x, y);
 		this.name = "player";
-		width = 30;
 		inventory = new Inventory();
+		size = 30;
+		collisionRange = 30;
 	}
 
 	public boolean canAttack() {
@@ -60,12 +61,8 @@ public class Player extends MovingEntity {
 	}
 
 	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
-		g.drawImage(texture[0], (int) (w.getCurrentWidth() / 2 - width / 2),
-				(int) (w.getCurrentHeight() / 2 - width / 2), (int) width, (int) width, null);
-		if (attackTickCount == 0) {
-			g.drawRect((int) (w.getCurrentWidth() / 2 - width / 2), (int) (w.getCurrentHeight() / 2 - width / 2), 30,
-					(int) (-1 * interactDistance));
-		}
+		g.drawImage(texture[0], (int) (w.getCurrentWidth() / 2 - size / 2), (int) (w.getCurrentHeight() / 2 - size / 2), size, size,
+				null);
 
 	}
 
@@ -96,5 +93,9 @@ public class Player extends MovingEntity {
 
 	public void deathEvent(EntityHandler e, Player player) {
 		// TODO clear inventory
+	}
+	
+	public int getSize(){
+		return size;
 	}
 }

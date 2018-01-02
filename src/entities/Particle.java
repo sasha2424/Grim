@@ -19,7 +19,6 @@ public class Particle extends StationaryEntity {
 		}
 		this.updateTexture();
 		name = "tree";
-		t = 0;
 		this.duration = duration;
 	}
 

@@ -18,6 +18,9 @@ public class Walker extends MovingEntity {
 		speed = new DoubleStat(1, 1);
 		name = "walker";
 		HP = new DoubleStat(20, 20);
+		size = 40;
+		collisionRange = 40;
+		
 	}
 
 	@Override
@@ -27,8 +30,7 @@ public class Walker extends MovingEntity {
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
 		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));
 
-		int k = 40;
-		g.drawImage(texture[0], (int) (x - k / 2), (int) (y - k / 2 + height), k, k, null);
+		g.drawImage(texture[0], (int) (x - size / 2), (int) (y - size / 2 + height), size, size, null);
 	}
 
 	@Override

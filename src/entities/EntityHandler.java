@@ -43,8 +43,8 @@ public class EntityHandler {
 		double dy = a.getAbsY() - b.getAbsY();
 
 		if (b instanceof Player) {
-			dx -= b.getWidth() / 2;
-			dy -= b.getWidth() / 2;
+			dx -= ((Player)b).getSize() / 2;
+			dy -= ((Player)b).getSize() / 2;
 		}
 		double angle = Math.atan(dy / dx);
 		if (dx < 0)

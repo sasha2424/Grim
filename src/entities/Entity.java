@@ -19,10 +19,12 @@ public abstract class Entity implements Serializable {
 	// Movement and rendering
 	protected double absX, absY;
 	protected double velX, velY;
+	protected int size;
 	protected transient Image[] texture;
-	protected double width;
 	protected int[] textureX, textureY;
 	protected DoubleStat speed;
+	
+	protected double collisionRange;
 
 	// battle stats
 	protected DoubleStat HP;
@@ -113,20 +115,16 @@ public abstract class Entity implements Serializable {
 		HP.set(hP);
 	}
 
-	protected static double getX(double x, double y, double r, double Width) {
-		return (x) * Math.cos(r) - (y) * Math.sin(r) + Width;
+	protected static double getX(double x, double y, double r, double ScreanWidth) {
+		return (x) * Math.cos(r) - (y) * Math.sin(r) + ScreanWidth;
 	}
 
-	protected static double getY(double x, double y, double r, double Height) {
-		return (y) * Math.cos(r) + (x) * Math.sin(r) + Height;
+	protected static double getY(double x, double y, double r, double ScreanHeight) {
+		return (y) * Math.cos(r) + (x) * Math.sin(r) + ScreanHeight;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public double getWidth() {
-		return width;
 	}
 
 	public boolean isDead() {
