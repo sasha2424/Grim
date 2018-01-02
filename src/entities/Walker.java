@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import items.Bread;
 import main.DoubleStat;
 import main.EventHandler;
 import main.GameWindow;
@@ -56,7 +57,8 @@ public class Walker extends MovingEntity {
 
 	@Override
 	public void deathEvent(EntityHandler e, Player p) {
-		// TODO Auto-generated method stub
+		if (Math.random() < .2)
+			p.inventory.addItem(new Bread());
 
 	}
 

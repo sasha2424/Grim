@@ -6,6 +6,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
 import items.Bread;
+import items.Fur;
 import main.DoubleStat;
 import main.EventHandler;
 import main.GameWindow;
@@ -82,8 +83,8 @@ public class Rat extends MovingEntity {
 	}
 
 	public void deathEvent(EntityHandler e, Player player) {
-		if (Math.random() < .2)
-			player.inventory.addItem(new Bread());
+		if (Math.random() < .5)
+			player.inventory.addItem(new Fur());
 	}
 
 }
