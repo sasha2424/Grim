@@ -77,7 +77,6 @@ public class SaveHandler {
 			FileInputStream fis = new FileInputStream("./Save/(" + x + "," + y + ").ser");
 			ObjectInputStream in = new ObjectInputStream(fis);
 			SavePacket p = (SavePacket) in.readObject();
-			System.out.println("4");
 			in.close();
 			fis.close();
 			return p;
@@ -86,7 +85,6 @@ public class SaveHandler {
 		} catch (ClassNotFoundException e) {
 		}
 
-		System.out.println("load failed");
 		Biome b = Biome.getBiome(x, y);
 		Tile t = new Tile(x, y, TileHandler.terrainHeight(x, y), Biome.getBiome(x, y));
 		ArrayList<Entity> e = b.generateEntitiesForTile(t);
@@ -97,7 +95,7 @@ public class SaveHandler {
 
 		try {
 			String save = "./Save/" + p.getName() + ".ser";
-	
+
 			FileOutputStream fos = new FileOutputStream(save);
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(p);

@@ -12,7 +12,7 @@ import biomes.Biome;
 import entities.Entity;
 import entities.Player;
 import main.GameWindow;
-import main.KeyHandler;
+import main.InputHandler;
 import processing.core.PApplet;
 
 public class Tile implements Serializable, Comparable {

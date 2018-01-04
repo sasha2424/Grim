@@ -9,9 +9,13 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
@@ -22,6 +26,7 @@ import biomes.SpawnHandler;
 import entities.*;
 import items.Bread;
 import saving.SaveHandler;
+import saving.SavePacket;
 import terrain.TileHandler;
 
 public class GameWindow extends JPanel {
@@ -30,22 +35,26 @@ public class GameWindow extends JPanel {
 	 * Don't Forget Graphics are done in GIMP
 	 * 
 	 */
+	
+	public static final boolean DEBUG = true;
 
 	private static final long serialVersionUID = 1L;
 	private static final double WIDTH = 800;
 	private static final double HEIGHT = 800;
 	public static long SEED;
+
+	public static int SCROLL_SENSITIVITY = 100;
 	// public static final long SEED = 5;
-	public static Point mouse;
 
 	public static TileHandler tileHandler;
-	public static KeyHandler keyHandler;
+	public static InputHandler inputHandler;
 	public static EntityHandler entityHandler;
 	public static SpawnHandler spawnHandler;
 	public static SaveHandler saveHandler;
 	public static EventHandler eventHandler;
 
 	public static double rotation = 0;
+	public static double playerRotation = 0;
 
 	public static Player player;
 
@@ -53,8 +62,8 @@ public class GameWindow extends JPanel {
 
 	// TODO
 	/*
-	 * add width to all entities
-	 * save player when saving and loading on exit and startup
+	 * add width to all entities save player when saving and loading on exit and
+	 * startup
 	 * 
 	 */
 
@@ -62,10 +71,13 @@ public class GameWindow extends JPanel {
 
 		SpriteSheetLoader.load();
 
-		player = new Player(0, 0, new int[] { 1 }, new int[] { 0 });
+		player = loadPlayer();
 		entityHandler = new EntityHandler();
 
 		entityHandler.addEntity(player);
+		
+		Rat r = new Rat(400,400);
+		entityHandler.addEntity(r);
 
 		// for (int i = 0; i < 5; i++) {
 		// entityHandler.addEntity(new Tree(Math.random() * 200, Math.random() *
@@ -75,11 +87,8 @@ public class GameWindow extends JPanel {
 		// }
 
 		tileHandler = new TileHandler(entityHandler);
-
 		spawnHandler = new SpawnHandler();
-
 		saveHandler = new SaveHandler();
-
 		eventHandler = new EventHandler();
 
 		JFrame frame = new JFrame("Grim");
@@ -88,8 +97,9 @@ public class GameWindow extends JPanel {
 		frame.setSize((int) WIDTH, (int) HEIGHT);
 		frame.setVisible(true);
 
-		keyHandler = new KeyHandler();
-		frame.addKeyListener(keyHandler);
+		inputHandler = new InputHandler();
+		frame.addKeyListener(inputHandler);
+		frame.addMouseWheelListener(inputHandler);
 
 		SEED = getSeed(); // TODO load seed from save
 
@@ -101,32 +111,25 @@ public class GameWindow extends JPanel {
 			dt = System.currentTimeMillis() - t;
 			frame.repaint();
 			if (dt > 20) {
-				entityHandler.tick(tileHandler, player);
 				t = System.currentTimeMillis();
+
+				entityHandler.tick(tileHandler, player);
 				spawnHandler.spawnEntities(entityHandler, player);
 
 				// do all player key actions
 				// ******************
 
-				mouse = MouseInfo.getPointerInfo().getLocation();
-
-				if (mouse != null) {
-					rotation = mouse.getX() / 100d;
-				} else {
-					rotation = 0;
+				if (inputHandler.getKeyPressed(0)) {
+					player.move(playerRotation - rotation);
 				}
-				rotation = rotation % (Math.PI * 2);
-
-				if (keyHandler.getKeyPressed(0)) {
-					player.move(rotation);
-				}
-				if (keyHandler.getKeyPressed(5) && player.canAttack()) {
-					entityHandler.playerInteract(player, rotation);
+				if (inputHandler.getKeyPressed(5) && player.canAttack()) {
+					entityHandler.playerInteract(player, playerRotation-rotation);
 					player.resetAttackCounter();
 				}
 
-				if (keyHandler.getKeyPressed(7)) {
+				if (inputHandler.getKeyPressed(7)) {
 					saveHandler.saveAll(tileHandler, entityHandler, player);
+					savePlayer(player);
 					System.exit(ABORT);
 				}
 
@@ -136,18 +139,44 @@ public class GameWindow extends JPanel {
 		}
 	}
 
+	public void setBoardRotation() {
+		rotation = (2 * Math.PI * inputHandler.getScroll() / 100) % (Math.PI * 2);
+		if (rotation < 0) {
+			rotation += Math.PI * 2;
+		}
+	}
+
+	public void setPlayerRotation() {
+		Point mouse = getMouse();
+		double dx = -mouse.getX() + getCurrentWidth() / 2 + player.getSize() / 2;
+		double dy = -mouse.getY() + getCurrentHeight() / 2 + 3 * player.getSize() / 2; // TODO
+																						// figure
+																						// out
+																						// why?
+		double angle = Math.atan2(dy, dx) + Math.PI;
+		player.setRotation(angle);
+		playerRotation = angle;
+	}
+
+	private Point getMouse() {
+		Point mouse = MouseInfo.getPointerInfo().getLocation();
+		Point screan = this.getLocation();
+		Point r = new Point();
+		r.setLocation(mouse.getX() + screan.getX(), mouse.getY() + screan.getY());
+		return r;
+	}
+
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
 
-		g2d.setColor(Color.white);
-		g2d.fillRect(0, 0, (int) GameWindow.WIDTH, (int) GameWindow.HEIGHT);
-
-		g2d.setColor(Color.red);
+		setPlayerRotation();
+		setBoardRotation();
 
 		if (Tab == 0) { // in game
-			if (!keyHandler.getKeyPressed(7)) {
+			if (!inputHandler.getKeyPressed(7)) {
 				// check for when game is closing
+
 				saveHandler.updateLoadedTiles(tileHandler, entityHandler, player);
 				tileHandler.renderAll(this, g2d, entityHandler, rotation, player);
 				g2d.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
@@ -155,7 +184,7 @@ public class GameWindow extends JPanel {
 				player.inventory.renderHandBar(this, g2d);
 			}
 		}
-		if (keyHandler.getKeyPressed(4)) { // inventory
+		if (inputHandler.getKeyPressed(4)) { // inventory
 			Tab = 1;
 			player.inventory.render(this, g2d);
 		} else {
@@ -215,6 +244,40 @@ public class GameWindow extends JPanel {
 
 		return 0; // seed if file save failed.
 
+	}
+
+	private static Player loadPlayer() {
+		try {
+			FileInputStream fis = new FileInputStream("./Save/player.ser");
+			ObjectInputStream in = new ObjectInputStream(fis);
+			Player p = (Player) in.readObject();
+			in.close();
+			fis.close();
+			p.updateTexture();
+			return p;
+		} catch (FileNotFoundException ex) {
+		} catch (IOException e) {
+		} catch (ClassNotFoundException e) {
+		}
+
+		System.out.println("player load failed");
+
+		return new Player(0, 0, new int[] { 1 }, new int[] { 0 });
+	}
+
+	private static void savePlayer(Player p) {
+		try {
+			String save = "./Save/player.ser";
+
+			FileOutputStream fos = new FileOutputStream(save);
+			ObjectOutputStream out = new ObjectOutputStream(fos);
+			out.writeObject(p);
+
+			out.close();
+			fos.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

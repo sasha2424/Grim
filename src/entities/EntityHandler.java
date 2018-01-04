@@ -43,8 +43,8 @@ public class EntityHandler {
 		double dy = a.getAbsY() - b.getAbsY();
 
 		if (b instanceof Player) {
-			dx -= ((Player)b).getSize() / 2;
-			dy -= ((Player)b).getSize() / 2;
+			dx -= ((Player) b).getSize() / 2;
+			dy -= ((Player) b).getSize() / 2;
 		}
 		double angle = Math.atan(dy / dx);
 		if (dx < 0)
@@ -68,8 +68,8 @@ public class EntityHandler {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if (e != player && dist(e, player) <= Player.interactDistance) {
-				double a = angle(e, player);
-				if (angleDist(a, r) < Math.PI / 8) {
+				double a = angle(player, e);
+				if (angleDist(a, r) < player.interectAngle) {
 					e.interactPlayer(this, player);
 				}
 			}
@@ -149,7 +149,7 @@ public class EntityHandler {
 	private double angle(Entity e1, Entity e2) {
 		double dx = e1.getAbsX() - e2.getAbsX();
 		double dy = e1.getAbsY() - e2.getAbsY();
-		double r = Math.atan2(dx, dy);
+		double r = Math.atan2(dy, dx);
 		r += Math.PI;
 		return r;
 	}

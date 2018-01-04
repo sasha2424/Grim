@@ -2,12 +2,19 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class KeyHandler implements KeyListener {
+public class InputHandler implements KeyListener, MouseWheelListener {
 	private Boolean[] keys;
 
-	public KeyHandler() {
+	private int scroll;
+
+	public InputHandler() {
 		super();
+		scroll = 0;
 		keys = new Boolean[8];
 		keys[0] = false; // move forward w
 		keys[1] = false; // move left a
@@ -86,6 +93,16 @@ public class KeyHandler implements KeyListener {
 		public void setNotPressed() {
 			pressed = false;
 		}
+	}
+
+	public int getScroll() {
+		return scroll;
+
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		scroll += e.getWheelRotation();
 	}
 
 }
