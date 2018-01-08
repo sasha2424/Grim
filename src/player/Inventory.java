@@ -22,6 +22,12 @@ public class Inventory implements Serializable {
 	public Inventory() {
 		inventory = new ArrayList<Item>();
 	}
+	
+	public void reloadItemTextures(){
+		for(Item i : inventory){
+			i.updateTexture();
+		}
+	}
 
 	public void addItem(Item i) {
 		inventory.add(i);

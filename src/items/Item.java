@@ -6,14 +6,22 @@ import java.io.Serializable;
 
 import main.SpriteSheetLoader;
 
-public class Item implements Serializable{
+public class Item implements Serializable {
 
-	protected Image texture;
+	protected transient Image texture;
+	protected int imageX;
+	protected int imageY;
 
 	public static final int ICON_SIZE = 50;
 
 	public Item(int spriteX, int spriteY) {
 		texture = SpriteSheetLoader.getTexture(spriteX, spriteY);
+		imageX = spriteX;
+		imageY = spriteY;
+	}
+
+	public void updateTexture() {
+		texture = SpriteSheetLoader.getTexture(imageX, imageY);
 	}
 
 	public void draw(Graphics g, double x, double y) {

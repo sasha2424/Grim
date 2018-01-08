@@ -16,6 +16,7 @@ import java.util.Random;
 
 import biomes.Biome;
 import biomes.Desert;
+import biomes.Ocean;
 import entities.Bush;
 import entities.Entity;
 import entities.EntityHandler;
@@ -69,8 +70,13 @@ public class TileHandler {
 
 	public static double terrainHeight(int x, int y) {
 
-		Random rand = new Random(GameWindow.SEED + 1398 * x + 1412 * y);
-		return 50 * rand.nextInt(3) + 10;
+		if (Biome.getBiome(x, y) instanceof Ocean) {
+			return 0;
+		} else {
+			return 30;
+		}
+		// Random rand = new Random(GameWindow.SEED + 1398 * x + 1412 * y);
+		// return 50 * rand.nextInt(3) + 10;
 		// return 0;
 	}
 

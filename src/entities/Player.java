@@ -1,17 +1,11 @@
 package entities;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.Serializable;
 
-import main.EventHandler;
 import main.GameWindow;
-import main.InputHandler;
 import player.Inventory;
-import processing.core.PApplet;
 import terrain.Tile;
-import terrain.TileHandler;
 
 public class Player extends MovingEntity implements Serializable {
 

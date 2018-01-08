@@ -2,7 +2,6 @@ package main;
 
 import java.awt.BorderLayout;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -17,16 +16,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import biomes.SpawnHandler;
 import entities.*;
-import items.Bread;
 import saving.SaveHandler;
-import saving.SavePacket;
 import terrain.TileHandler;
 
 public class GameWindow extends JPanel {
@@ -35,7 +30,7 @@ public class GameWindow extends JPanel {
 	 * Don't Forget Graphics are done in GIMP
 	 * 
 	 */
-	
+
 	public static final boolean DEBUG = true;
 
 	private static final long serialVersionUID = 1L;
@@ -75,8 +70,8 @@ public class GameWindow extends JPanel {
 		entityHandler = new EntityHandler();
 
 		entityHandler.addEntity(player);
-		
-		Rat r = new Rat(400,400);
+
+		Rat r = new Rat(400, 400);
 		entityHandler.addEntity(r);
 
 		// for (int i = 0; i < 5; i++) {
@@ -123,7 +118,7 @@ public class GameWindow extends JPanel {
 					player.move(playerRotation - rotation);
 				}
 				if (inputHandler.getKeyPressed(5) && player.canAttack()) {
-					entityHandler.playerInteract(player, playerRotation-rotation);
+					entityHandler.playerInteract(player, playerRotation - rotation);
 					player.resetAttackCounter();
 				}
 
@@ -254,6 +249,7 @@ public class GameWindow extends JPanel {
 			in.close();
 			fis.close();
 			p.updateTexture();
+			p.inventory.reloadItemTextures();
 			return p;
 		} catch (FileNotFoundException ex) {
 		} catch (IOException e) {
