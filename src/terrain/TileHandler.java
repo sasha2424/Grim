@@ -25,6 +25,7 @@ import entities.Player;
 import entities.Tree;
 import main.GameWindow;
 import processing.core.PApplet;
+import rendering.RenderQueue;
 
 public class TileHandler {
 
@@ -32,41 +33,25 @@ public class TileHandler {
 	// area where all tiles are loaded
 	public static final int LOAD_SIZE = 2;// 2
 
+	public static final int RENDER_DISTANCE = 1;
+
 	private static ArrayList<Tile> tiles;
 
 	public TileHandler(EntityHandler e) {
 		tiles = new ArrayList<Tile>();
 	}
 
-	@SuppressWarnings("unchecked")
-	public void renderAll(GameWindow w, Graphics2D g, EntityHandler e, double rotation, Player player) {
-		Collections.sort(tiles);
+	public void renderAll(RenderQueue renderQueue, Player p) {
+		Tile playerTile = getPlayerTile(p);
 		for (int i = 0; i < tiles.size(); i++) {
-			tiles.get(i).draw(w, g, rotation, player);
-			e.renderEntitiesAt(w, g, tiles.get(i), getPlayerHeight(player), player, rotation);
+			Tile t = tiles.get(i);
+
+			if (Math.abs(t.getBoardX() - playerTile.getBoardX()) <= RENDER_DISTANCE
+					|| Math.abs(t.getBoardY() - playerTile.getBoardY()) <= RENDER_DISTANCE) {
+				renderQueue.addRenderable(t);
+			}
 		}
 	}
-
-	// public void updateTiles(EntityHandler e, Player player) {
-	// // TODO make more effective
-	// tiles.clear();
-	//
-	// int x = player.getBoardX();
-	// int y = player.getBoardY();
-	//
-	// // create new tiles
-	// for (int i = -LOAD_SIZE + x; i < LOAD_SIZE + x; i++) {
-	// for (int j = -LOAD_SIZE + y; j < LOAD_SIZE + y; j++) {
-	// if (getTile(i, j) == null) {
-	// Tile t = new Tile(i, j, terrainHeight(i, j), Biome.getBiome(i, j));
-	// tiles.add(t);
-	// }
-	// }
-	// }
-	//
-	// // TODO update spawn in the players tile + small range
-	//
-	// }
 
 	public static double terrainHeight(int x, int y) {
 

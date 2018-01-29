@@ -14,8 +14,9 @@ import entities.Player;
 import main.GameWindow;
 import main.InputHandler;
 import processing.core.PApplet;
+import rendering.Renderable;
 
-public class Tile implements Serializable, Comparable {
+public class Tile extends Renderable implements Serializable{
 
 	public static final double TILE_SIZE = 1600; // 1600
 
@@ -23,7 +24,7 @@ public class Tile implements Serializable, Comparable {
 
 	private int boardX, boardY; // grid location
 
-	private double absX, absY, H;
+	private double H;
 
 	public Tile(int x, int y, double h, Biome b) {
 		this.boardX = x;
@@ -31,6 +32,7 @@ public class Tile implements Serializable, Comparable {
 		this.H = h;
 		absX = boardX * TILE_SIZE;
 		absY = boardY * TILE_SIZE;
+		this.setRP(0);
 	}
 
 	public boolean inBorder(double x, double y) {
@@ -166,10 +168,13 @@ public class Tile implements Serializable, Comparable {
 	}
 
 	@Override
-	public int compareTo(Object a) {
-		Tile k = (Tile) a;
+	public int compareTo(Renderable o) {
+		int delta = this.getRP() - o.getRP();
+		if(delta !=0){
+			return delta;
+		}
 		return (int) (getY(this.absX, this.absY, GameWindow.rotation, 0)
-				- getY(k.absX, k.absY, GameWindow.rotation, 0));
+				- getY(o.getAbsX(), o.getAbsY(), GameWindow.rotation, 0));
 	}
 
 	public int getBoardX() {
@@ -186,22 +191,6 @@ public class Tile implements Serializable, Comparable {
 
 	public void setBoardY(int boardY) {
 		this.boardY = boardY;
-	}
-
-	public double getAbsX() {
-		return absX;
-	}
-
-	public void setAbsX(double absX) {
-		this.absX = absX;
-	}
-
-	public double getAbsY() {
-		return absY;
-	}
-
-	public void setAbsY(double absY) {
-		this.absY = absY;
 	}
 
 	public double getH() {

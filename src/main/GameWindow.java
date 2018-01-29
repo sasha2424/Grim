@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import biomes.SpawnHandler;
 import entities.*;
 import items.*;
+import rendering.RenderQueue;
 import saving.SaveHandler;
 import terrain.TileHandler;
 
@@ -48,6 +49,7 @@ public class GameWindow extends JPanel {
 	public static SpawnHandler spawnHandler;
 	public static SaveHandler saveHandler;
 	public static EventHandler eventHandler;
+	public static RenderQueue renderQueue;
 
 	public static double rotation = 0;
 	public static double playerRotation = 0;
@@ -88,6 +90,7 @@ public class GameWindow extends JPanel {
 		spawnHandler = new SpawnHandler();
 		saveHandler = new SaveHandler();
 		eventHandler = new EventHandler();
+		renderQueue = new RenderQueue();
 
 		JFrame frame = new JFrame("Grim");
 		frame.getContentPane().add(new GameWindow(), BorderLayout.CENTER);
@@ -176,7 +179,13 @@ public class GameWindow extends JPanel {
 				// check for when game is closing
 
 				saveHandler.updateLoadedTiles(tileHandler, entityHandler, player);
-				tileHandler.renderAll(this, g2d, entityHandler, rotation, player);
+				
+				//TODO fix these
+				tileHandler.renderAll(renderQueue,player);
+				entityHandler.renderAll(renderQueue,player);
+				renderQueue.renderAll(this, g2d, player, rotation, TileHandler.getPlayerHeight(player));
+				
+				
 				g2d.drawString(player.getBoardX() + "  " + player.getBoardY(), 10, 10);
 
 				player.inventory.renderHandBar(this, g2d);

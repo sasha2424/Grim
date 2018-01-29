@@ -24,7 +24,6 @@ public abstract class Entity extends Renderable implements Serializable{
 	protected String name;
 
 	// Movement and rendering
-	protected double absX, absY;
 	protected double velX, velY;
 	protected int size;
 	protected transient Image[] texture;
@@ -63,6 +62,8 @@ public abstract class Entity extends Renderable implements Serializable{
 		D = new DoubleStat(1, 1);
 
 		hasDied = false;
+		
+		this.setRP(1);
 	}
 
 	public void updateTexture() {

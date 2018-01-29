@@ -12,12 +12,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import main.GameWindow;
+import rendering.RenderQueue;
 import terrain.Tile;
 import terrain.TileHandler;
 
 public class EntityHandler {
 
 	private ArrayList<Entity> entities;
+	
+	public static final double RENDER_DISTANCE = 2000;
 
 	public EntityHandler() {
 		entities = new ArrayList<Entity>();
@@ -91,12 +94,12 @@ public class EntityHandler {
 			}
 		}
 	}
-
-	public void renderEntitiesAt(GameWindow w, Graphics2D g, Tile t, double playerH, Player player, double rotation) {
+	
+	public void renderAll(RenderQueue renderQueue,Player p){
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
-				e.draw(w, g, player, rotation, playerH - t.getH());
+			if (dist(p,e) < RENDER_DISTANCE) {
+				renderQueue.addRenderable(e);
 			}
 		}
 	}

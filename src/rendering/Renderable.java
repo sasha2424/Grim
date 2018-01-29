@@ -10,6 +10,9 @@ public abstract class Renderable implements Comparable<Renderable> {
 
 	private int RP = 0;// render priority (higher is rendered on top)
 
+	protected double absX;
+	protected double absY;
+	
 	abstract public void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height);
 
 	@Override
@@ -23,6 +26,22 @@ public abstract class Renderable implements Comparable<Renderable> {
 
 	public void setRP(int rP) {
 		RP = rP;
+	}
+	
+	public double getAbsX() {
+		return absX;
+	}
+
+	public void setAbsX(double absX) {
+		this.absX = absX;
+	}
+
+	public double getAbsY() {
+		return absY;
+	}
+
+	public void setAbsY(double absY) {
+		this.absY = absY;
 	}
 
 }
