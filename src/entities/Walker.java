@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 import items.Bread;
+import items.Fur;
 import main.DoubleStat;
 import main.EventHandler;
 import main.GameWindow;
@@ -24,7 +25,7 @@ public class Walker extends MovingEntity {
 	}
 
 	@Override
-	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
 		// TODO draw graphics in super class method (because all the same)
 
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
@@ -59,8 +60,8 @@ public class Walker extends MovingEntity {
 
 	@Override
 	public void deathEvent(EntityHandler e, Player p) {
-		if (Math.random() < .2)
-			p.inventory.addItem(new Bread());
+		if (Math.random() < .5)
+			e.addEntity(new ItemDrop(absX, absY, new Fur()));
 
 	}
 

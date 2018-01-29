@@ -20,7 +20,7 @@ public abstract class MovingEntity extends Entity {
 
 	}
 
-	public abstract void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height);
+	public abstract void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height);
 
 	protected void move(double distance) {
 
@@ -38,6 +38,10 @@ public abstract class MovingEntity extends Entity {
 	public void interactPlayer(EntityHandler e, Player player) {
 		this.HP.increment(-1 * player.A.getVal());
 		this.summonParticle(e, 0, 10, 30);
+	}
+
+	public void nearPlayer(EntityHandler e, Player p) {
+		// TODO maybe have some sort of particles for some things
 	}
 
 	protected void summonParticle(EntityHandler e, int type, double range, int duration) {

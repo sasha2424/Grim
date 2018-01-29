@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import biomes.SpawnHandler;
 import entities.*;
+import items.*;
 import saving.SaveHandler;
 import terrain.TileHandler;
 
@@ -71,8 +72,10 @@ public class GameWindow extends JPanel {
 
 		entityHandler.addEntity(player);
 
-		Rat r = new Rat(400, 400);
-		entityHandler.addEntity(r);
+		entityHandler.addEntity(new Rat(400, 400));
+		entityHandler.addEntity(new Rat(-400, 400));
+		entityHandler.addEntity(new Rat(-400, -400));
+		entityHandler.addEntity(new Rat(400, -400));
 
 		// for (int i = 0; i < 5; i++) {
 		// entityHandler.addEntity(new Tree(Math.random() * 200, Math.random() *

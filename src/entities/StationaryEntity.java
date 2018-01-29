@@ -22,13 +22,17 @@ public abstract class StationaryEntity extends Entity {
 		canMove = false;
 	}
 
-	public abstract void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height);
+	public abstract void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height);
 
 	// public abstract void displayInfoText();
 	// use event handler to make text pop up on screen
 
 	public void interactPlayer(EntityHandler e, Player player) {
 		this.HP.increment(-1 * player.A.getVal());
+	}
+	
+	public void nearPlayer(EntityHandler e, Player p){
+		//TODO maybe have some sort of particles for some things
 	}
 
 	public void deathEvent(EntityHandler e, Player player) {

@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.Serializable;
@@ -10,9 +11,15 @@ import main.DoubleStat;
 import main.EventHandler;
 import main.GameWindow;
 import main.SpriteSheetLoader;
+import rendering.Renderable;
 import terrain.Tile;
 
-public abstract class Entity implements Serializable {
+public abstract class Entity extends Renderable implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected String name;
 
@@ -39,6 +46,8 @@ public abstract class Entity implements Serializable {
 	protected boolean canDie;
 	protected boolean visible;
 	protected boolean collides;
+	
+	
 
 	public Entity(double X, double Y, int[] x, int[] y) {
 		this.absX = X;
@@ -82,15 +91,23 @@ public abstract class Entity implements Serializable {
 		hasDied = false;
 	}
 
-	public abstract void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height);
+	@Override
+	public abstract void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height);
 
 	public abstract void tick(EntityHandler e);
 
 	public abstract void interactPlayer(EntityHandler e, Player p);
 	// perform action with player/to self
 
+	public abstract void nearPlayer(EntityHandler e, Player p);
+	
 	public abstract void deathEvent(EntityHandler e, Player p);
-
+	
+	@Override
+	public int compareTo(Renderable o) {
+		return this.getRP() - o.getRP();
+	}
+	
 	public double getAbsX() {
 		return absX;
 	}
@@ -130,4 +147,5 @@ public abstract class Entity implements Serializable {
 	public boolean isDead() {
 		return hasDied;
 	}
+	
 }

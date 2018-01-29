@@ -29,11 +29,11 @@ public class Rat extends MovingEntity {
 		name = "rat";
 		size = 30;
 		collisionRange = 30;
-		
+
 	}
 
 	@Override
-	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
 		// TODO draw graphics in super class method (because all the same)
 
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
@@ -85,7 +85,7 @@ public class Rat extends MovingEntity {
 
 	public void deathEvent(EntityHandler e, Player player) {
 		if (Math.random() < .5)
-			player.inventory.addItem(new Fur());
+			e.addEntity(new ItemDrop(absX, absY, new Fur()));
 	}
 
 }

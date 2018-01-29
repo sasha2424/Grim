@@ -3,6 +3,7 @@ package entities;
 import java.awt.Graphics2D;
 import java.io.Serializable;
 
+import main.DoubleStat;
 import main.GameWindow;
 import player.Inventory;
 import terrain.Tile;
@@ -25,6 +26,7 @@ public class Player extends MovingEntity implements Serializable {
 		size = 30;
 		collisionRange = 30;
 		rotation = 0;
+		this.A = new DoubleStat(100, 100);
 	}
 
 	public boolean canAttack() {
@@ -59,7 +61,7 @@ public class Player extends MovingEntity implements Serializable {
 		this.absY = y;
 	}
 
-	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
 		g.translate(w.getCurrentWidth() / 2, w.getCurrentHeight() / 2);
 		g.rotate(this.rotation + Math.PI / 2); // Additional rotation bc of
 												// texture2

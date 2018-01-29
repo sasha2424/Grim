@@ -6,6 +6,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
 import items.Bread;
+import items.Fur;
 import main.DoubleStat;
 import main.EventHandler;
 import main.GameWindow;
@@ -39,7 +40,7 @@ public class Crocodile extends MovingEntity {
 	}
 
 	@Override
-	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
 		// TODO draw graphics in super class method (because all the same)
 
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
@@ -114,7 +115,7 @@ public class Crocodile extends MovingEntity {
 
 	public void deathEvent(EntityHandler e, Player player) {
 		if (Math.random() < .8)
-			player.inventory.addItem(new Bread());
+			e.addEntity(new ItemDrop(absX, absY, new Fur()));
 	}
 
 }

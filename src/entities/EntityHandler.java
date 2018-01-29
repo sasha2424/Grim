@@ -29,6 +29,11 @@ public class EntityHandler {
 				Entity e = entities.get(i);
 				if (!e.isDead()) {
 					e.tick(this);
+
+					if (!(e instanceof Player) && dist(e, p) < Player.interactDistance*3) {
+						e.nearPlayer(this, p);
+					}
+
 				} else {
 					e.deathEvent(this, p);
 					entities.remove(e);
@@ -91,7 +96,7 @@ public class EntityHandler {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if (t.inBorder(e.getAbsX(), e.getAbsY())) {
-				e.draw(w, g, t, player, rotation, playerH - t.getH());
+				e.draw(w, g, player, rotation, playerH - t.getH());
 			}
 		}
 	}
@@ -140,7 +145,7 @@ public class EntityHandler {
 		return closest;
 	}
 
-	private double dist(Entity e1, Entity e2) {
+	public static double dist(Entity e1, Entity e2) {
 		double dx = (e1.getAbsX() - e2.getAbsX()) * (e1.getAbsX() - e2.getAbsX());
 		double dy = (e1.getAbsY() - e2.getAbsY()) * (e1.getAbsY() - e2.getAbsY());
 		return Math.sqrt(dx + dy);

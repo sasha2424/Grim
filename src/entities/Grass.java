@@ -16,7 +16,7 @@ public class Grass extends StationaryEntity {
 		collisionRange = 30;
 	}
 
-	public void draw(GameWindow w, Graphics2D g, Tile t, Player player, double rotation, double height) {
+	public void draw(GameWindow w, Graphics2D g, Player player, double rotation, double height) {
 
 		double x = (double) (getX(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentWidth() / 2));
 		double y = (double) (getY(absX - player.getX(), absY - player.getY(), rotation, w.getCurrentHeight() / 2));

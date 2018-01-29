@@ -1,6 +1,7 @@
 package player;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,32 +18,53 @@ public class Inventory implements Serializable {
 
 	private static final int DOWN_SHIFT = 210;
 
-	private ArrayList<Item> inventory;
+	private static final int WIDTH = 5;
+	private static final int HEIGHT = 5;
+
+	private Item[][] inventory;
 
 	public Inventory() {
-		inventory = new ArrayList<Item>();
+		inventory = new Item[WIDTH][HEIGHT];
 	}
-	
-	public void reloadItemTextures(){
-		for(Item i : inventory){
-			i.updateTexture();
+
+	public void reloadItemTextures() {
+		for (int i = 0; i < WIDTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				if (inventory[i][j] != null) {
+					inventory[i][j].updateTexture();
+				}
+			}
 		}
 	}
 
-	public void addItem(Item i) {
-		inventory.add(i);
+	public boolean addItem(Item item) {
+		for (int i = 0; i < WIDTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				if (inventory[i][j] == null) {
+					inventory[i][j] = item;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
-	public void render(GameWindow w, Graphics g) {
+	public void render(GameWindow w, Graphics2D g) {
 		g.fillRect(0, 0, (int) w.getCurrentWidth(), (int) w.getCurrentHeight());
-		for (int i = 0; i < inventory.size(); i++) {
-			inventory.get(i).draw(g, i % 10 * SPACING, (int) (i / 10) * SPACING + DOWN_SHIFT);
+		for (int i = 0; i < WIDTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				if (inventory[i][j] != null) {
+					inventory[i][j].draw(g, i * SPACING, j * SPACING + DOWN_SHIFT);
+				}
+			}
 		}
 	}
 
-	public void renderHandBar(GameWindow w, Graphics g) {
-		for (int i = 0; i < 4 && i < inventory.size(); i++) {
-			inventory.get(i).draw(g, i % 10 * SPACING * 2, w.getCurrentHeight() - 2 * SPACING);
+	public void renderHandBar(GameWindow w, Graphics2D g) {
+		for (int i = 0; i < WIDTH; i++) {
+			if (inventory[i][0] != null) {
+				inventory[i][0].draw(g, i % 10 * SPACING * 2, w.getCurrentHeight() - 2 * SPACING);
+			}
 		}
 	}
 }

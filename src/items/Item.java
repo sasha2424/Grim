@@ -1,6 +1,7 @@
 package items;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ public class Item implements Serializable {
 	protected int imageY;
 
 	public static final int ICON_SIZE = 50;
+	public static final int GROUND_SIZE = 25;
 
 	public Item(int spriteX, int spriteY) {
 		texture = SpriteSheetLoader.getTexture(spriteX, spriteY);
@@ -24,8 +26,13 @@ public class Item implements Serializable {
 		texture = SpriteSheetLoader.getTexture(imageX, imageY);
 	}
 
-	public void draw(Graphics g, double x, double y) {
+	public void draw(Graphics2D g, double x, double y) {
 		g.drawImage(texture, (int) x, (int) y, ICON_SIZE, ICON_SIZE, null);
+	}
+
+	public void drawOnGround(Graphics2D g, int x, int y) {
+		g.drawImage(texture, (int) x, (int) y, GROUND_SIZE, GROUND_SIZE, null);
+
 	}
 
 }
